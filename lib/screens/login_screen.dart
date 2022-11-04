@@ -1,6 +1,8 @@
 import 'package:fl_almagest/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
+import '../ui/input_decorations.dart';
+
 class LoginScreen extends StatelessWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
@@ -20,15 +22,16 @@ class LoginScreen extends StatelessWidget {
                   ),
                   Text('Login', style: Theme.of(context).textTheme.headline4),
                   const SizedBox(height: 30),
-                  _LoginForm(),
+                  const _LoginForm(),
                 ],
               ),
             ),
-            SizedBox(height: 50),
-            Text(
+            const SizedBox(height: 50),
+            const Text(
               'Crear una nueva cuenta',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            )
+            ),
+            const SizedBox(height: 50)
           ],
         ),
       )),
@@ -45,22 +48,39 @@ class _LoginForm extends StatelessWidget {
       child: Form(
         child: Column(
           children: [
-            TextField(
-              autocorrect: false,
-              keyboardType: TextInputType.emailAddress,
-              decoration: InputDecoration(
-                  enabledBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.deepPurple),
-                  ),
-                  focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.deepPurple, width: 2),
-                  ),
-                  hintText: 'Pepi.to@gmail.com',
+            TextFormField(
+                autocorrect: false,
+                keyboardType: TextInputType.emailAddress,
+                decoration: InputDecorations.authInputDecoration(
+                  hinText: 'Pepi.to@gmail.com',
                   labelText: 'Email',
-                  labelStyle: TextStyle(color: Colors.grey),
-                  prefixIcon: Icon(Icons.alternate_email_sharp,
-                      color: Colors.deepPurple)),
-            )
+                  prefixIcon: Icons.alternate_email_sharp,
+                )),
+            const SizedBox(height: 30),
+            TextFormField(
+                autocorrect: false,
+                obscureText: true,
+                keyboardType: TextInputType.emailAddress,
+                decoration: InputDecorations.authInputDecoration(
+                    hinText: '*******',
+                    labelText: 'Password',
+                    prefixIcon: Icons.lock_clock_outlined)),
+            const SizedBox(height: 30),
+            MaterialButton(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10)),
+              disabledColor: Colors.grey,
+              elevation: 0,
+              color: Colors.deepPurple,
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 80, vertical: 15),
+                child: const Text(
+                  'submit',
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+              onPressed: () {},
+            ),
           ],
         ),
       ),
