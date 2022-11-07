@@ -1,12 +1,14 @@
 import 'package:fl_almagest/providers/login_form_provider.dart';
 import 'package:fl_almagest/widgets/widgets.dart';
 import 'package:flutter/material.dart';
+import '../services/services.dart';
 import '../ui/input_decorations.dart';
 import 'package:provider/provider.dart';
 
+import 'package:http/http.dart' as http;
+
 class LoginScreen extends StatelessWidget {
   const LoginScreen({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,9 +33,17 @@ class LoginScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 50),
-            const Text(
-              'Crear una nueva cuenta',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            TextButton(
+              onPressed: () =>
+                  Navigator.pushReplacementNamed(context, 'register'),
+              style: ButtonStyle(
+                  overlayColor:
+                      MaterialStateProperty.all(Colors.indigo.withOpacity(0.1)),
+                  shape: MaterialStateProperty.all(StadiumBorder())),
+              child: const Text(
+                'Create new account',
+                style: TextStyle(fontSize: 18, color: Colors.black87),
+              ),
             ),
             const SizedBox(height: 50)
           ],
@@ -106,7 +116,12 @@ class _LoginForm extends StatelessWidget {
                   ? null
                   : () async {
                       FocusScope.of(context).unfocus();
+                      final authService =
+                          Provider.of<AuthService>(context, listen: false);
                       if (!loginForm.isValidForm()) return;
+
+                      final String? token = await authService.login(
+                          loginForm.email, loginForm.password);
                       Navigator.pushReplacementNamed(context, 'admin');
                     },
             ),

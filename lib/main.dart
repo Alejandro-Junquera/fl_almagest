@@ -1,7 +1,23 @@
 import 'package:fl_almagest/screens/screens.dart';
 import 'package:flutter/material.dart';
+import 'package:fl_almagest/services/services.dart';
+import 'package:provider/provider.dart';
 
-void main() => runApp(const MyApp());
+void main() => runApp(AppState());
+
+class AppState extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (_) => AuthService(),
+        ),
+      ],
+      child: MyApp(),
+    );
+  }
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -14,6 +30,7 @@ class MyApp extends StatelessWidget {
         initialRoute: 'login',
         routes: {
           'login': (_) => LoginScreen(),
+          'register': (_) => RegisterScreen(),
           'admin': (_) => AdminScreen(),
         },
         theme: ThemeData.light()
