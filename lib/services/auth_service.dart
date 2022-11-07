@@ -1,11 +1,12 @@
 import 'dart:convert';
-
+import 'dart:html';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:dio/dio.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class AuthService extends ChangeNotifier {
   final String _baseUrl = 'salesin.allsites.es';
+  final Storage = const FlutterSecureStorage();
 
   Future<String?> createUser(String name, String surname, String email,
       String password, String c_password, String cicle_id) async {
@@ -17,11 +18,21 @@ class AuthService extends ChangeNotifier {
       'c_password': c_password,
       'cicle_id': cicle_id
     };
-    final url = Uri.http(_baseUrl, '/public/api/register');
-    final resp = await http.post(url, body: json.encode(authData));
+    final url = Uri.http(_baseUrl, '/public/api/register', {});
+    final resp = await http.post(url,
+        headers: {
+          'Content-type': 'application/json',
+          'Accept': 'application/json',
+          "Authorization": "Some token"
+        },
+        body: json.encode(authData));
     final Map<String, dynamic> decodedResp = json.decode(resp.body);
     print(decodedResp);
   }
+  //usuario: confirmado@gmail.com
+  //registrado@gmail.com
+  //activado@gmail.com
+  //password: 12345678
 
   Future<String?> login(String email, String password) async {
     /*
@@ -51,7 +62,11 @@ class AuthService extends ChangeNotifier {
         body: json.encode(authData));
     final Map<String, dynamic> decodedResp = json.decode(resp.body);
     if (decodedResp['success'] == true) {
-      print(decodedResp);
+      return decodedResp['data']['type'] +
+          ',' +
+          decodedResp['data']['actived'].toString();
+    } else {
+      return decodedResp['message'];
     }
   }
 }
