@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import '../services/services.dart';
 import '../ui/input_decorations.dart';
 import 'package:provider/provider.dart';
-
 import 'package:http/http.dart' as http;
 
 class LoginScreen extends StatelessWidget {

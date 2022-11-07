@@ -2,7 +2,9 @@ import 'package:fl_almagest/providers/register_form_provider.dart';
 import 'package:fl_almagest/services/auth_service.dart';
 import 'package:fl_almagest/widgets/widgets.dart';
 import 'package:flutter/material.dart';
+import '../models/cicles.dart';
 import '../ui/input_decorations.dart';
+import '../services/services.dart';
 import 'package:provider/provider.dart';
 
 class RegisterScreen extends StatelessWidget {
@@ -57,6 +59,9 @@ class _RegisterForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final authService = Provider.of<AuthService>(context, listen: false);
+    final List<Data>? ciclos = authService.getCicles() as List<Data>?;
+    print(ciclos);
     final registerForm = Provider.of<RegisterFormProvider>(context);
     return Container(
       child: Form(
@@ -142,18 +147,6 @@ class _RegisterForm extends StatelessWidget {
                       : 'the password must have more than 6 characters';
                 }),
             const SizedBox(height: 5),
-            TextFormField(
-                autocorrect: false,
-                obscureText: true,
-                keyboardType: TextInputType.phone,
-                decoration: InputDecorations.authInputDecoration(
-                    hinText: 'Asir',
-                    labelText: 'Cicles',
-                    prefixIcon: Icons.lock_clock_outlined),
-                onChanged: (value) => registerForm.cicle_id = value,
-                validator: (value) {
-                  return (value != null) ? null : 'the cicle must exist';
-                }),
             const SizedBox(height: 5),
             MaterialButton(
               shape: RoundedRectangleBorder(
