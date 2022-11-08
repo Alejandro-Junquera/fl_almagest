@@ -78,4 +78,18 @@ class AuthService extends ChangeNotifier {
     var data = cicles.data;
     return data;
   }
+
+   Future<List<String>?> readUser() async {
+    final url = Uri.http(_baseUrl, '/public/api/users');
+    final resp = await http.post(url,
+      headers: {
+          // 'Content-type': 'application/json',
+          'Accept': 'application/json',
+          "Authorization": "Some token"
+        },);
+    final Map<String, dynamic> decodedResp = json.decode(resp.body);
+    //return decodedResp['data']
+    print(decodedResp);
+  }
+
 }
