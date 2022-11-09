@@ -59,9 +59,6 @@ class _RegisterForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final authService = Provider.of<AuthService>(context, listen: false);
-    final List<Data>? ciclos = authService.getCicles() as List<Data>?;
-    print(ciclos);
     final registerForm = Provider.of<RegisterFormProvider>(context);
     return Container(
       child: Form(
