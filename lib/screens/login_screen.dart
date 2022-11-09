@@ -118,18 +118,22 @@ class _LoginForm extends StatelessWidget {
                       final authService =
                           Provider.of<AuthService>(context, listen: false);
                       if (!loginForm.isValidForm()) return;
-
                       final String? data = await authService.login(
                           loginForm.email, loginForm.password);
+                      final bool? verified = await authService.isVerify();
                       final splitted = data?.split(',');
-                      if (splitted?[0] == 'a') {
-                        Navigator.pushReplacementNamed(context, 'admin');
-                      } else if (splitted?[0] == 'u' && splitted?[1] == '1') {
-                        Navigator.pushReplacementNamed(context, 'user');
-                      } else if (splitted?[0] == 'u' && splitted?[1] == '0') {
-                        print('usuario no activado');
+                      if (verified!) {
+                        if (splitted?[0] == 'a') {
+                          Navigator.pushReplacementNamed(context, 'admin');
+                        } else if (splitted?[0] == 'u' && splitted?[1] == '1') {
+                          Navigator.pushReplacementNamed(context, 'user');
+                        } else if (splitted?[0] == 'u' && splitted?[1] == '0') {
+                          print('usuario no activado');
+                        } else {
+                          print(data);
+                        }
                       } else {
-                        print(data);
+                        print('Usuario no verificado');
                       }
                     },
             ),

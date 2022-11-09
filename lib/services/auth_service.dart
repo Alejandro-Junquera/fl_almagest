@@ -6,7 +6,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class AuthService extends ChangeNotifier {
   final String _baseUrl = 'salesin.allsites.es';
-  final Storage = const FlutterSecureStorage();
+  final storage = const FlutterSecureStorage();
 
   Future<String?> createUser(String name, String surname, String email,
       String password, String c_password, String cicle_id) async {
@@ -62,6 +62,9 @@ class AuthService extends ChangeNotifier {
         body: json.encode(authData));
     final Map<String, dynamic> decodedResp = json.decode(resp.body);
     if (decodedResp['success'] == true) {
+      await storage.write(key: 'token', value: decodedResp['data']['token']);
+      await storage.write(
+          key: 'id', value: decodedResp['data']['id'].toString());
       return decodedResp['data']['type'] +
           ',' +
           decodedResp['data']['actived'].toString();
@@ -92,5 +95,23 @@ class AuthService extends ChangeNotifier {
     final Map<String, dynamic> decodedResp = json.decode(resp.body);
     //return decodedResp['data']
     print(decodedResp);
+  }
+
+  Future<bool?> isVerify() async {
+    var id = await storage.read(key: 'id') as String;
+    final Map<String, dynamic> user_id = {
+      'user_id': int.parse(id),
+    };
+    var token = await storage.read(key: 'token') as String;
+    final url = Uri.http(_baseUrl, '/public/api/confirm', {});
+    final resp = await http.post(url,
+        headers: {
+          'Content-type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+        body: json.encode(user_id));
+    final Map<String, dynamic> decodedResp = json.decode(resp.body);
+    return decodedResp['success'];
   }
 }
