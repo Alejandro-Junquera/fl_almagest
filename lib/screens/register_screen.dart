@@ -166,13 +166,6 @@ class _RegisterForm extends StatelessWidget {
                       final authService =
                           Provider.of<AuthService>(context, listen: false);
                       if (!registerForm.isValidForm()) return;
-                      final String? token = await authService.createUser(
-                          registerForm.name,
-                          registerForm.surname,
-                          registerForm.email,
-                          registerForm.password,
-                          registerForm.c_password,
-                          registerForm.cicle_id);
                       Navigator.pushReplacementNamed(context, 'admin');
                     },
             ),

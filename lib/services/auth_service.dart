@@ -7,28 +7,6 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 class AuthService extends ChangeNotifier {
   final String _baseUrl = 'salesin.allsites.es';
   final storage = const FlutterSecureStorage();
-
-  Future<String?> createUser(String name, String surname, String email,
-      String password, String c_password, String cicle_id) async {
-    final Map<String, dynamic> authData = {
-      'name': name,
-      'surname': surname,
-      'email': email,
-      'password': password,
-      'c_password': c_password,
-      'cicle_id': cicle_id
-    };
-    final url = Uri.http(_baseUrl, '/public/api/register', {});
-    final resp = await http.post(url,
-        headers: {
-          'Content-type': 'application/json',
-          'Accept': 'application/json',
-          "Authorization": "Some token"
-        },
-        body: json.encode(authData));
-    final Map<String, dynamic> decodedResp = json.decode(resp.body);
-    print(decodedResp);
-  }
   //usuario: confirmado@gmail.com
   //registrado@gmail.com
   //activado@gmail.com
@@ -71,15 +49,6 @@ class AuthService extends ChangeNotifier {
     } else {
       return decodedResp['message'];
     }
-  }
-
-  Future<List<Data>?> getCicles() async {
-    final url = Uri.http(_baseUrl, '/public/api/cicles');
-    final resp = await http.get(url);
-    final Map<String, dynamic> decodedResp = json.decode(resp.body);
-    var cicles = Cicles.fromJson(decodedResp);
-    var data = cicles.data;
-    return data;
   }
 
   Future<List<String>?> readUser() async {
