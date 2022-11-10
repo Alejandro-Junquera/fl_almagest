@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
+import '../services/auth_service.dart';
+
 class ListviewUsersScreen extends StatelessWidget {
+  // final authService = Provider.of<AuthService>(context, listen: false);
   List<String> users = ['user1', 'user2', 'user3'];
   ListviewUsersScreen({super.key});
 

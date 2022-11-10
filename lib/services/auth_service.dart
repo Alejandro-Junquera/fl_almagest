@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
+
 class AuthService extends ChangeNotifier {
   final String _baseUrl = 'salesin.allsites.es';
   final storage = const FlutterSecureStorage();
@@ -51,19 +52,23 @@ class AuthService extends ChangeNotifier {
     }
   }
 
-  Future<List<String>?> readUser() async {
+  Future<List<DataUsers>> getUsers() async {
+    List<DataUsers> usuarios = [];
     final url = Uri.http(_baseUrl, '/public/api/users');
-    final resp = await http.post(
-      url,
+    var token = await storage.read(key: 'token') as String;
+    final resp = await http.get(url,
       headers: {
-        // 'Content-type': 'application/json',
-        'Accept': 'application/json',
-        "Authorization": "Some token"
-      },
-    );
-    final Map<String, dynamic> decodedResp = json.decode(resp.body);
-    //return decodedResp['data']
-    print(decodedResp);
+          'Content-type': 'application/json',
+          'Accept': 'application/json',
+          "Authorization": "Bearer $token"
+        },);
+    final Map<String, dynamic> decodedResp = json.decode(resp.body);    
+    decodedResp.forEach((key, value) {
+      if(key == 'data'){
+        usuarios.add(value);
+      }
+    });
+    return usuarios;
   }
 
   Future<bool?> isVerify() async {
