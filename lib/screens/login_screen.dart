@@ -122,19 +122,19 @@ class _LoginForm extends StatelessWidget {
                           loginForm.email, loginForm.password);
                       final bool? verified = await authService.isVerify();
                       final splitted = data?.split(',');
-                      if (verified!) {
-                        if (splitted?[0] == 'a') {
-                          Navigator.pushReplacementNamed(context, 'admin');
-                        } else if (splitted?[0] == 'u' && splitted?[1] == '1') {
-                          Navigator.pushReplacementNamed(context, 'user');
-                        } else if (splitted?[0] == 'u' && splitted?[1] == '0') {
-                          print('usuario no activado');
-                        } else {
-                          print(data);
-                        }
+                      // if (verified!) {
+                      if (splitted?[0] == 'a') {
+                        Navigator.pushReplacementNamed(context, 'admin');
+                      } else if (splitted?[0] == 'u' && splitted?[1] == '1') {
+                        Navigator.pushReplacementNamed(context, 'user');
+                      } else if (splitted?[0] == 'u' && splitted?[1] == '0') {
+                        print('usuario no activado');
                       } else {
-                        print('Usuario no verificado');
+                        print(data);
                       }
+                      // } else {
+                      //  print('Usuario no verificado');
+                      //}
                     },
             ),
           ],
