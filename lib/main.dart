@@ -1,4 +1,5 @@
 import 'package:fl_almagest/screens/screens.dart';
+import 'package:fl_almagest/services/users_service.dart';
 import 'package:flutter/material.dart';
 import 'package:fl_almagest/services/services.dart';
 import 'package:provider/provider.dart';
@@ -12,6 +13,9 @@ class AppState extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(
           create: (_) => AuthService(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => UserService(),
         ),
       ],
       child: MyApp(),

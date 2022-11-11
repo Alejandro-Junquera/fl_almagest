@@ -1,22 +1,21 @@
 import 'package:fl_almagest/models/models.dart';
 import 'package:fl_almagest/services/auth_service.dart';
+import 'package:fl_almagest/services/services.dart';
 import 'package:flutter/material.dart';
 import 'package:fl_almagest/screens/listview_users_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
 import 'loading_screen.dart';
+
 class AdminScreen extends StatelessWidget {
   AdminScreen({Key? key}) : super(key: key);
 
-  
   @override
   Widget build(BuildContext context) {
-  final authService = Provider.of<AuthService>(context, listen: false);
-  List<DataUsers> users = authService.usuarios;
-  bool isLoading = authService.isLoading;
-    while(isLoading)
-      return LoadingScreen();
+    final userService = Provider.of<UserService>(context, listen: false);
+    List<DataUsers> users = userService.usuarios;
+   if(userService.isLoading) return LoadingScreen();
 
     return Scaffold(
       appBar: AppBar(
@@ -48,37 +47,34 @@ class AdminScreen extends StatelessWidget {
                 ),
               ],
             ),
-            endActionPane:  ActionPane(
-                motion: ScrollMotion(),
-                children: [
-                  SlidableAction(
-                    // An action can be bigger than the others.
+            endActionPane: ActionPane(
+              motion: ScrollMotion(),
+              children: [
+                SlidableAction(
+                  // An action can be bigger than the others.
 
-                    onPressed: null,
-                    backgroundColor: Color.fromARGB(255, 75, 81, 82),
-                    foregroundColor: Colors.white,
-                    icon: Icons.edit,
-                    label: 'Editar',
-                  ),
-                  SlidableAction(
-                    onPressed: null,
-                    backgroundColor: Color(0xFFFE4A49),
-                    foregroundColor: Colors.white,
-                    icon: Icons.delete,
-                    label: 'Eliminar',
-                  ),
-                ],
-              ),
+                  onPressed: null,
+                  backgroundColor: Color.fromARGB(255, 75, 81, 82),
+                  foregroundColor: Colors.white,
+                  icon: Icons.edit,
+                  label: 'Editar',
+                ),
+                SlidableAction(
+                  onPressed: null,
+                  backgroundColor: Color(0xFFFE4A49),
+                  foregroundColor: Colors.white,
+                  icon: Icons.delete,
+                  label: 'Eliminar',
+                ),
+              ],
+            ),
             child: buildUserListTile(user),
           );
-          
         },
       ),
     );
   }
 
   Widget buildUserListTile(user) => ListTile(
-            contentPadding: const EdgeInsets.all(16),
-            title: Text(user.name)
-            );
+      contentPadding: const EdgeInsets.all(16), title: Text(user.name));
 }

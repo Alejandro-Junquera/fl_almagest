@@ -4,16 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-
 class AuthService extends ChangeNotifier {
   //Esta list es la que llama desde adminScreen
-  AuthService(){
-    getUsers();
-  }
-  List<DataUsers> usuarios = [];
   final String _baseUrl = 'salesin.allsites.es';
   final storage = const FlutterSecureStorage();
-  bool isLoading =true;
+  bool isLoading = true;
+  readToken() async {
+    return await storage.read(key: 'token') ?? '';
+  }
   //usuario: confirmado@gmail.com
   //registrado@gmail.com
   //activado@gmail.com
@@ -56,33 +54,6 @@ class AuthService extends ChangeNotifier {
     } else {
       return decodedResp['message'];
     }
-  }
-
-  Future<List<DataUsers>> getUsers() async {
-    final url = Uri.http(_baseUrl, '/public/api/users');
-    var token = await storage.read(key: 'token') as String;
-    isLoading= true;
-    notifyListeners();
-    final resp = await http.get(url,
-      headers: {
-          'Content-type': 'application/json',
-          'Accept': 'application/json',
-          "Authorization": "Bearer $token"
-        },);
-    final Map<String, dynamic> decodedResp = json.decode(resp.body); 
-    decodedResp.forEach((key, value) {
-      if(key == 'data'){
-       List<dynamic> userD = value;
-       for(int i=0; i<userD.length; i++){
-          final valueUser = DataUsers.fromJson(userD[i]);
-          usuarios.add(valueUser);
-       }
-       
-      }
-      isLoading = false;
-      notifyListeners();
-    });
-    return usuarios;
   }
 
   Future<bool?> isVerify() async {
