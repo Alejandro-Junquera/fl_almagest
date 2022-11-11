@@ -5,16 +5,14 @@ class LoadingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Loading'),
-        elevation: 0,
-        automaticallyImplyLeading: false,
+    return const Scaffold(
+     backgroundColor:Color.fromRGBO(63, 63, 156, 1),
+      body: Center(
+        child: CircularProgressIndicator(
+        color: Colors.white
+        )
       ),
-      body: const Center(
-          child: CircularProgressIndicator(
-        color: Color.fromARGB(255, 153, 8, 0),
-      )),
     );
   }
 }
+
