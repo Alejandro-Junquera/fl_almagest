@@ -9,6 +9,7 @@ class AuthService extends ChangeNotifier {
   final String _baseUrl = 'salesin.allsites.es';
   final storage = const FlutterSecureStorage();
   bool isLoading = true;
+  List<Data> ciclos = [];
   
   readToken() async {
     return await storage.read(key: 'token') ?? '';
@@ -19,18 +20,6 @@ class AuthService extends ChangeNotifier {
   //password: 12345678
 
   Future<String?> login(String email, String password) async {
-    /*
-    try {
-      final Map<String, dynamic> body = {'email': email, 'password': password};
-      var url = Uri.parse("http://salesin.allsites.es/public/api/login");
-      var respuesta = http.post(url, body: json.encode(body),
-      });
-      respuesta.then((value) => print(value.body.toString()));
-    } catch (e) {
-      print(e);
-    }
-    */
-
     final Map<String, dynamic> authData = {
       'email': email,
       'password': password
@@ -55,40 +44,52 @@ class AuthService extends ChangeNotifier {
     } else {
       return decodedResp['message'];
     }
+    /*
+    try {
+      final Map<String, dynamic> body = {'email': email, 'password': password};
+      var url = Uri.parse("http://salesin.allsites.es/public/api/login");
+      var respuesta = http.post(url, body: json.encode(body),
+      });
+      respuesta.then((value) => print(value.body.toString()));
+    } catch (e) {
+      print(e);
+    }
+    */
   }
 
-// Future<List<Cicles>> getCicles() async {
-//     final url = Uri.http(_baseUrl, '/public/api/cicles');
-//     String? token = await AuthService().readToken();
-//     isLoading = true;
-//     notifyListeners();
-//     final resp = await http.get(
-//       url,
-//       headers: {
-//         'Content-type': 'application/json',
-//         'Accept': 'application/json',
-//         "Authorization": "Bearer $token"
-//       },
-//     );
-//     final Map<String, dynamic> decodedResp = json.decode(resp.body); 
-//     var user= Users.fromJson(decodedResp);
-//     for(var i in user.data!){
-//       usuarios.add(i);
-//     }
-//     // decodedResp.forEach((key, value) {
-//     //   if (key == 'data') {
-//     //     List<dynamic> userD = value;
-//     //     for (int i = 0; i < userD.length; i++) {
-//     //       final valueUser = DataUsers.fromJson(userD[i]);
-//     //       usuarios.add(valueUser);
-//     //     }
-//     //   }
-     
-//     // });
-//      isLoading = false;
-//       notifyListeners();
-//     return usuarios;
-//   }
+Future<List<Data>> getCicles() async {
+    final url = Uri.http(_baseUrl, '/public/api/cicles');
+    String? token = await AuthService().readToken();
+    isLoading = true;
+    notifyListeners();
+    final resp = await http.get(
+      url,
+      headers: {
+        'Content-type': 'application/json',
+        'Accept': 'application/json',
+        "Authorization": " "
+      }, 
+    );
+    final Map<String, dynamic> decodedResp = json.decode(resp.body); 
+    var cicle= Cicles.fromJson(decodedResp);
+    for(var i in cicle.data!){
+      ciclos.add(i);
+    }
+
+        // decodedResp.forEach((key, value) {
+        //   if (key == 'data') {
+        //     List<dynamic> userD = value;
+        //     for (int i = 0; i < userD.length; i++) {
+        //       final valueUser = DataUsers.fromJson(userD[i]);
+        //       usuarios.add(valueUser);
+        //     }
+        //   }
+        // });
+
+    isLoading = false;
+    notifyListeners();
+    return ciclos;
+  }
 
   Future<bool?> isVerify() async {
     var id = await storage.read(key: 'id') as String;

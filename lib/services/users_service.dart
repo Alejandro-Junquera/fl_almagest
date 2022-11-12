@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:fl_almagest/services/auth_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
@@ -41,8 +40,8 @@ class UserService extends ChangeNotifier {
     //   }
      
     // });
-     isLoading = false;
-      notifyListeners();
+    isLoading = false;
+    notifyListeners();
     return usuarios;
   }
 }
