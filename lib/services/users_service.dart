@@ -26,18 +26,23 @@ class UserService extends ChangeNotifier {
         "Authorization": "Bearer $token"
       },
     );
-    final Map<String, dynamic> decodedResp = json.decode(resp.body);
-    decodedResp.forEach((key, value) {
-      if (key == 'data') {
-        List<dynamic> userD = value;
-        for (int i = 0; i < userD.length; i++) {
-          final valueUser = DataUsers.fromJson(userD[i]);
-          usuarios.add(valueUser);
-        }
-      }
-      isLoading = false;
+    final Map<String, dynamic> decodedResp = json.decode(resp.body); 
+    var user= Users.fromJson(decodedResp);
+    for(var i in user.data!){
+      usuarios.add(i);
+    }
+    // decodedResp.forEach((key, value) {
+    //   if (key == 'data') {
+    //     List<dynamic> userD = value;
+    //     for (int i = 0; i < userD.length; i++) {
+    //       final valueUser = DataUsers.fromJson(userD[i]);
+    //       usuarios.add(valueUser);
+    //     }
+    //   }
+     
+    // });
+     isLoading = false;
       notifyListeners();
-    });
     return usuarios;
   }
 }

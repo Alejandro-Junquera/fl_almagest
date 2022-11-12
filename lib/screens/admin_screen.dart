@@ -1,8 +1,6 @@
 import 'package:fl_almagest/models/models.dart';
-import 'package:fl_almagest/services/auth_service.dart';
 import 'package:fl_almagest/services/services.dart';
 import 'package:flutter/material.dart';
-import 'package:fl_almagest/screens/listview_users_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
@@ -13,9 +11,9 @@ class AdminScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final userService = Provider.of<UserService>(context, listen: false);
+    final userService = Provider.of<UserService>(context);
     List<DataUsers> users = userService.usuarios;
-   if(userService.isLoading) return LoadingScreen();
+    if(userService.isLoading) return LoadingScreen();
 
     return Scaffold(
       appBar: AppBar(
