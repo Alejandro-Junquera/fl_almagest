@@ -73,4 +73,9 @@ class AuthService extends ChangeNotifier {
     final Map<String, dynamic> decodedResp = json.decode(resp.body);
     return decodedResp['success'];
   }
+
+  Future logout() async{
+    await storage.delete(key: 'token');
+    return;
+  }
 }

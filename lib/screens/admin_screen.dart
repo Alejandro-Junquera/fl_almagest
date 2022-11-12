@@ -12,6 +12,7 @@ class AdminScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final userService = Provider.of<UserService>(context);
+    final authService = Provider.of<AuthService>(context,listen: false);
     List<DataUsers> users = userService.usuarios;
     if(userService.isLoading) return LoadingScreen();
 
@@ -19,6 +20,15 @@ class AdminScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Lista de usuarios: '),
         backgroundColor: Color.fromRGBO(63, 63, 156, 1),
+        leading: IconButton(
+          icon: Icon(Icons.login_outlined),
+          onPressed: (){
+
+            authService.logout();
+            Navigator.pushReplacementNamed(context, 'login');
+
+          }
+        ),
       ),
       body: ListView.builder(
         itemCount: users.length,
