@@ -107,7 +107,7 @@ class _LoginForm extends StatelessWidget {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 80, vertical: 15),
                 child: Text(
-                  loginForm.isLoading ? 'Wait' : 'submit',
+                  loginForm.isLoading ? 'Wait' : 'Submit',
                   style: const TextStyle(color: Colors.white),
                 ),
               ),
