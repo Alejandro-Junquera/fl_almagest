@@ -9,6 +9,7 @@ class AuthService extends ChangeNotifier {
   final String _baseUrl = 'salesin.allsites.es';
   final storage = const FlutterSecureStorage();
   bool isLoading = true;
+  
   readToken() async {
     return await storage.read(key: 'token') ?? '';
   }
@@ -55,6 +56,39 @@ class AuthService extends ChangeNotifier {
       return decodedResp['message'];
     }
   }
+
+// Future<List<Cicles>> getCicles() async {
+//     final url = Uri.http(_baseUrl, '/public/api/cicles');
+//     String? token = await AuthService().readToken();
+//     isLoading = true;
+//     notifyListeners();
+//     final resp = await http.get(
+//       url,
+//       headers: {
+//         'Content-type': 'application/json',
+//         'Accept': 'application/json',
+//         "Authorization": "Bearer $token"
+//       },
+//     );
+//     final Map<String, dynamic> decodedResp = json.decode(resp.body); 
+//     var user= Users.fromJson(decodedResp);
+//     for(var i in user.data!){
+//       usuarios.add(i);
+//     }
+//     // decodedResp.forEach((key, value) {
+//     //   if (key == 'data') {
+//     //     List<dynamic> userD = value;
+//     //     for (int i = 0; i < userD.length; i++) {
+//     //       final valueUser = DataUsers.fromJson(userD[i]);
+//     //       usuarios.add(valueUser);
+//     //     }
+//     //   }
+     
+//     // });
+//      isLoading = false;
+//       notifyListeners();
+//     return usuarios;
+//   }
 
   Future<bool?> isVerify() async {
     var id = await storage.read(key: 'id') as String;

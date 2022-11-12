@@ -144,7 +144,21 @@ class _RegisterForm extends StatelessWidget {
                       : 'the password must have more than 6 characters';
                 }),
             const SizedBox(height: 5),
-            const SizedBox(height: 5),
+            // const SizedBox(height: 5),
+//             DropdownButton(
+//               value: _selectedItem,
+//               items: _options
+//                   .map(
+//                     (day) => DropdownMenuItem(
+//                       child: Text(day),
+//                       value: day,
+//                     ),
+//                   )
+//                   .toList(),
+//               onChanged: (value) {
+//                 _selectedItem = value.toString();
+//               },
+//             ),
             MaterialButton(
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10)),

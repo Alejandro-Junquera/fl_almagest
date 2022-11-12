@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'Productos App',
+        title: 'AlmaGest',
         initialRoute: 'login',
         routes: {
           'login': (_) => LoginScreen(),
