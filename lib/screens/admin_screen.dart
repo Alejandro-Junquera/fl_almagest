@@ -35,9 +35,9 @@ class AdminScreen extends StatelessWidget {
         itemBuilder: (context, index) {
           final user = users[index];
           return Slidable(
-            startActionPane: ActionPane(
-              motion: const StretchMotion(),
-              children: const [
+            startActionPane: const ActionPane(
+              motion:  StretchMotion(),
+              children:  [
                 // A SlidableAction can have an icon and/or a label.
                 SlidableAction(
                   onPressed: null,
@@ -55,18 +55,18 @@ class AdminScreen extends StatelessWidget {
                 ),
               ],
             ),
-            endActionPane: ActionPane(
+            endActionPane: const ActionPane(
               motion: ScrollMotion(),
               children: [
-                SlidableAction(
-                  // An action can be bigger than the others.
+                // SlidableAction(
+                //   // An action can be bigger than the others.
 
-                  onPressed: null,
-                  backgroundColor: Color.fromARGB(255, 75, 81, 82),
-                  foregroundColor: Colors.white,
-                  icon: Icons.edit,
-                  label: 'Editar',
-                ),
+                //   onPressed: null,
+                //   backgroundColor: Color.fromARGB(255, 75, 81, 82),
+                //   foregroundColor: Colors.white,
+                //   icon: Icons.edit,
+                //   label: 'Editar',
+                // ),
                 SlidableAction(
                   onPressed: null,
                   backgroundColor: Color(0xFFFE4A49),

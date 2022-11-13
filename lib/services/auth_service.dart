@@ -9,8 +9,12 @@ class AuthService extends ChangeNotifier {
   final String _baseUrl = 'salesin.allsites.es';
   final storage = const FlutterSecureStorage();
   bool isLoading = true;
-  List<Data> ciclos = [];
+  final List<Data> ciclos = [];
   
+  AuthService() {
+    getCicles();
+  }
+
   readToken() async {
     return await storage.read(key: 'token') ?? '';
   }
@@ -59,7 +63,7 @@ class AuthService extends ChangeNotifier {
 
 Future<List<Data>> getCicles() async {
     final url = Uri.http(_baseUrl, '/public/api/cicles');
-    String? token = await AuthService().readToken();
+    //String? token = await AuthService().readToken();
     isLoading = true;
     notifyListeners();
     final resp = await http.get(
@@ -85,7 +89,7 @@ Future<List<Data>> getCicles() async {
         //     }
         //   }
         // });
-
+      print(ciclos);
     isLoading = false;
     notifyListeners();
     return ciclos;

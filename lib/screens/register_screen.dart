@@ -6,6 +6,7 @@ import '../models/cicles.dart';
 import '../ui/input_decorations.dart';
 import '../services/services.dart';
 import 'package:provider/provider.dart';
+import 'loading_screen.dart';
 
 class RegisterScreen extends StatelessWidget {
   const RegisterScreen({Key? key}) : super(key: key);
@@ -56,10 +57,14 @@ class RegisterScreen extends StatelessWidget {
 
 class _RegisterForm extends StatelessWidget {
   const _RegisterForm({super.key});
-
+ 
   @override
   Widget build(BuildContext context) {
     final registerForm = Provider.of<RegisterFormProvider>(context);
+    final authService = Provider.of<AuthService>(context);
+    List<Data> ciclos= authService.ciclos;
+    String? selected;
+    // print(selectedItem);
     return Container(
       child: Form(
         key: registerForm.formKey,
@@ -145,20 +150,24 @@ class _RegisterForm extends StatelessWidget {
                 }),
             const SizedBox(height: 5),
             // const SizedBox(height: 5),
-//             DropdownButton(
-//               value: _selectedItem,
-//               items: _options
-//                   .map(
-//                     (day) => DropdownMenuItem(
-//                       child: Text(day),
-//                       value: day,
-//                     ),
-//                   )
-//                   .toList(),
-//               onChanged: (value) {
-//                 _selectedItem = value.toString();
-//               },
-//             ),
+            DropdownButton<String>(
+                value: selected,
+                items: ciclos
+                    .map(
+                      (item) => DropdownMenuItem<String>(
+                        value: item.name,
+                        child: Text(item.name.toString()),
+                        
+                      ))
+                    .toList(),
+                hint: Text('Select a cicle'),
+                onChanged: (item) {
+                  //setState(() { 
+                  selected = item.toString(); 
+                
+                }
+                 ),
+            const SizedBox(height: 5),
             MaterialButton(
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10)),
