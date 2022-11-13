@@ -5,6 +5,7 @@ import '../services/services.dart';
 import '../ui/input_decorations.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -50,6 +51,28 @@ class LoginScreen extends StatelessWidget {
       )),
     );
   }
+}
+
+void customToast(String message, BuildContext context) {
+  showToast(
+    message,
+    textStyle: TextStyle(
+      fontSize: 14,
+      wordSpacing: 0.1,
+      color: Colors.black,
+      fontWeight: FontWeight.bold,
+    ),
+    textPadding: EdgeInsets.all(23),
+    fullWidth: true,
+    toastHorizontalMargin: 25,
+    borderRadius: BorderRadius.circular(15),
+    backgroundColor: Colors.indigo,
+    alignment: Alignment.bottomLeft,
+    position: StyledToastPosition.top,
+    duration: Duration(seconds: 3),
+    animation: StyledToastAnimation.slideFromTop,
+    context: context,
+  );
 }
 
 class _LoginForm extends StatelessWidget {
@@ -120,7 +143,7 @@ class _LoginForm extends StatelessWidget {
                       if (!loginForm.isValidForm()) return;
                       final String? data = await authService.login(
                           loginForm.email, loginForm.password);
-                      final bool? verified = await authService.isVerify();
+                      //final bool? verified = await authService.isVerify();
                       final splitted = data?.split(',');
                       // if (verified!) {
                       if (splitted?[0] == 'a') {
@@ -130,7 +153,7 @@ class _LoginForm extends StatelessWidget {
                       } else if (splitted?[0] == 'u' && splitted?[1] == '0') {
                         print('usuario no activado');
                       } else {
-                        print(data);
+                        customToast('Email or password incorrect', context);
                       }
                       // } else {
                       //  print('Usuario no verificado');
