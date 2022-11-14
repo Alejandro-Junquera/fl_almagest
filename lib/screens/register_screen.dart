@@ -63,7 +63,6 @@ class _RegisterForm extends StatelessWidget {
     final registerForm = Provider.of<RegisterFormProvider>(context);
     final authService = Provider.of<AuthService>(context);
     List<Data> ciclos= authService.ciclos;
-    String? selected;
     // print(selectedItem);
     return Container(
       child: Form(
@@ -150,23 +149,17 @@ class _RegisterForm extends StatelessWidget {
                 }),
             const SizedBox(height: 5),
             // const SizedBox(height: 5),
-            DropdownButton<String>(
-                value: selected,
-                items: ciclos
-                    .map(
-                      (item) => DropdownMenuItem<String>(
-                        value: item.name,
-                        child: Text(item.name.toString()),
-                        
-                      ))
-                    .toList(),
-                hint: Text('Select a cicle'),
-                onChanged: (item) {
-                  //setState(() { 
-                  selected = item.toString(); 
-                
-                }
-                 ),
+            DropdownButtonFormField(
+              items: ciclos.map((e){
+                return DropdownMenuItem(
+                  child: Text(e.name.toString()),
+                  value: e.id,
+                );
+              }).toList(),
+               onChanged: (value){
+                  registerForm.cicle_id= value!;
+               }
+               ),
             const SizedBox(height: 5),
             MaterialButton(
               shape: RoundedRectangleBorder(

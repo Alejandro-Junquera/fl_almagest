@@ -114,7 +114,7 @@ Future<List<Data>> getCicles() async {
   }
 
   Future logout() async{
-    await storage.delete(key: 'token');
+    await storage.deleteAll();
     return;
   }
 }
