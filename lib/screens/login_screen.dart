@@ -67,10 +67,10 @@ void customToast(String message, BuildContext context) {
     toastHorizontalMargin: 25,
     borderRadius: BorderRadius.circular(15),
     backgroundColor: Colors.indigo,
-    alignment: Alignment.bottomLeft,
-    position: StyledToastPosition.top,
+    alignment: Alignment.topCenter,
+    position: StyledToastPosition.bottom,
     duration: Duration(seconds: 3),
-    animation: StyledToastAnimation.slideFromTop,
+    animation: StyledToastAnimation.slideFromBottom,
     context: context,
   );
 }
@@ -151,7 +151,7 @@ class _LoginForm extends StatelessWidget {
                       } else if (splitted?[0] == 'u' && splitted?[1] == '1') {
                         Navigator.pushReplacementNamed(context, 'user');
                       } else if (splitted?[0] == 'u' && splitted?[1] == '0') {
-                        print('usuario no activado');
+                        customToast('Admin must active your account', context);
                       } else {
                         customToast('Email or password incorrect', context);
                       }
