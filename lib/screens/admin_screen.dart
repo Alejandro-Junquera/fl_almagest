@@ -32,19 +32,19 @@ class AdminScreen extends StatelessWidget {
         itemBuilder: (context, index) {
           final user = users[index];
           return Slidable(
-            startActionPane: const ActionPane(
+            startActionPane: ActionPane(
               motion:  StretchMotion(),
               children:  [
                 // A SlidableAction can have an icon and/or a label.
                 SlidableAction(
-                  onPressed: null,
+                  onPressed: activate(context, user.id),
                   backgroundColor: Color(0xFF7BC043),
                   foregroundColor: Colors.white,
                   icon: Icons.check_circle,
                   label: 'Activar',
                 ),
                 SlidableAction(
-                  onPressed: null,
+                  onPressed: deactivate(context, user.id),
                   backgroundColor: Color.fromARGB(255, 75, 81, 82),
                   foregroundColor: Colors.white,
                   icon: Icons.disabled_by_default_rounded,
@@ -52,7 +52,7 @@ class AdminScreen extends StatelessWidget {
                 ),
               ],
             ),
-            endActionPane: const ActionPane(
+            endActionPane: ActionPane(
               motion: ScrollMotion(),
               children: [
                 // SlidableAction(
@@ -65,7 +65,7 @@ class AdminScreen extends StatelessWidget {
                 //   label: 'Editar',
                 // ),
                 SlidableAction(
-                  onPressed: null,
+                  onPressed: delete(context, user.id),
                   backgroundColor: Color(0xFFFE4A49),
                   foregroundColor: Colors.white,
                   icon: Icons.delete,
@@ -82,4 +82,16 @@ class AdminScreen extends StatelessWidget {
 
   Widget buildUserListTile(user) => ListTile(
       contentPadding: const EdgeInsets.all(16), title: Text(user.name));
+}
+
+activate(BuildContext context, int? user_id){
+
+}
+
+deactivate(BuildContext context, int? user_id){
+
+}
+
+delete(BuildContext context, int? user_id){
+
 }
