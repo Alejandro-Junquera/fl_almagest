@@ -5,7 +5,6 @@ import '../models/cicles.dart';
 import '../ui/input_decorations.dart';
 import '../services/services.dart';
 import 'package:provider/provider.dart';
-import 'loading_screen.dart';
 
 class RegisterScreen extends StatelessWidget {
   const RegisterScreen({Key? key}) : super(key: key);

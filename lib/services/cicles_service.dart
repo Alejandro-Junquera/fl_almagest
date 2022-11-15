@@ -9,6 +9,9 @@ class CiclesService extends ChangeNotifier {
   final String _baseUrl = 'salesin.allsites.es';
   bool isLoading = true;
   final List<Data> ciclos = [];
+  CiclesService(){
+    getCicles();
+  }
 
 Future<List<Data>> getCicles() async {
     final url = Uri.http(_baseUrl, '/public/api/cicles');
