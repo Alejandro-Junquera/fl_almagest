@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import '../models/cicles.dart';
 
-class UserService extends ChangeNotifier {
+class CiclesService extends ChangeNotifier {
   final String _baseUrl = 'salesin.allsites.es';
   bool isLoading = true;
   final List<Data> ciclos = [];
