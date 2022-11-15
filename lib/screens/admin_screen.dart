@@ -1,4 +1,5 @@
 import 'package:fl_almagest/models/models.dart';
+import 'package:fl_almagest/services/activate_service.dart';
 import 'package:fl_almagest/services/services.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -37,7 +38,7 @@ class AdminScreen extends StatelessWidget {
               children:  [
                 // A SlidableAction can have an icon and/or a label.
                 SlidableAction(
-                  onPressed: activate(context, user.id),
+                  onPressed: activate(context, user.id.toString()),
                   backgroundColor: Color(0xFF7BC043),
                   foregroundColor: Colors.white,
                   icon: Icons.check_circle,
@@ -84,13 +85,17 @@ class AdminScreen extends StatelessWidget {
       contentPadding: const EdgeInsets.all(16), title: Text(user.name));
 }
 
-activate(BuildContext context, int? user_id){
+activate(BuildContext context, String user_id){
+  final activateService = Provider.of<ActivateService>(context);
+  // String message = await authService.activate(user_id);
+  activateService.activate(user_id);
+  final msg = activateService.mensaje;
 
 }
 
 deactivate(BuildContext context, int? user_id){
 
-}
+} 
 
 delete(BuildContext context, int? user_id){
 

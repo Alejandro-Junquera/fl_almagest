@@ -10,6 +10,7 @@ class AuthService extends ChangeNotifier {
   final storage = const FlutterSecureStorage();
   bool isLoading = true;
   final List<Data> ciclos = [];
+  String mensaje ='';
   
   AuthService() {
     getCicles();
@@ -117,5 +118,4 @@ Future<List<Data>> getCicles() async {
     await storage.deleteAll();
     return;
   }
-  
 }
