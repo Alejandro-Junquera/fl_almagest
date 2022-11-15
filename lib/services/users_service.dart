@@ -12,6 +12,7 @@ class UserService extends ChangeNotifier {
   UserService() {
     getUsers();
   }
+  
   Future<List<DataUsers>> getUsers() async {
     final url = Uri.http(_baseUrl, '/public/api/users');
     String? token = await AuthService().readToken();

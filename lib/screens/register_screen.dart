@@ -1,5 +1,4 @@
 import 'package:fl_almagest/providers/register_form_provider.dart';
-import 'package:fl_almagest/services/auth_service.dart';
 import 'package:fl_almagest/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import '../models/cicles.dart';

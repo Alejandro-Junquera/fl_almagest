@@ -13,6 +13,7 @@ class AdminScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final userService = Provider.of<UserService>(context);
     final authService = Provider.of<AuthService>(context, listen: false);
+  
     List<DataUsers> users0 = userService.usuarios;
     List<DataUsers> users = [];
     for(var i in users0){
@@ -52,7 +53,7 @@ class AdminScreen extends StatelessWidget {
               children:  [
                 Visibility(child: 
                 SlidableAction(
-                  onPressed: activate(context, user.id.toString()),
+                  onPressed: (context){activate(context, user.id.toString());},
                   backgroundColor: Color(0xFF7BC043),
                   foregroundColor: Colors.white,
                   icon: Icons.check_circle,
@@ -62,7 +63,7 @@ class AdminScreen extends StatelessWidget {
                 ),
                 Visibility(child: 
                 SlidableAction(
-                  onPressed: deactivate(context, user.id.toString()),
+                  onPressed:(context){ deactivate(context, user.id.toString());},
                   backgroundColor: Color.fromARGB(255, 75, 81, 82),
                   foregroundColor: Colors.white,
                   icon: Icons.disabled_by_default_rounded,
@@ -84,7 +85,9 @@ class AdminScreen extends StatelessWidget {
                 //   label: 'Editar',
                 // ),
                 SlidableAction(
-                  onPressed: delete(context, user.id.toString()),
+                  onPressed:(context){ delete(context, user.id.toString());
+                   
+  },
                   backgroundColor: Color(0xFFFE4A49),
                   foregroundColor: Colors.white,
                   icon: Icons.delete,
@@ -104,7 +107,7 @@ class AdminScreen extends StatelessWidget {
 }
 
 activate(BuildContext context, String user_id){
-  final activateService = Provider.of<ActivateService>(context);
+  final activateService = Provider.of<ActivateService>(context,listen: false);
   // String message = await authService.activate(user_id);
   activateService.activate(user_id);
   final msg = activateService.mensaje;
@@ -112,15 +115,16 @@ activate(BuildContext context, String user_id){
 }
 
 deactivate(BuildContext context, String user_id){
-  final deactivateService = Provider.of<DeactivateService>(context);
+  final deactivateService = Provider.of<DeactivateService>(context, listen: false);
   // String message = await authService.activate(user_id);
   deactivateService.deactivate(user_id);
   final msg = deactivateService.mensaje;
 } 
 
 delete(BuildContext context, String user_id){
-final deleteService = Provider.of<DeleteService>(context);
+final deleteService = Provider.of<DeleteService>(context, listen: false);
   // String message = await authService.activate(user_id);
   deleteService.delete(user_id);
   final msg = deleteService.mensaje;
 }
+
