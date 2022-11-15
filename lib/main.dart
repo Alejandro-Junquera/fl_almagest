@@ -17,6 +17,15 @@ class AppState extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_) => UserService(),
         ),
+        ChangeNotifierProvider(
+          create: (_) => DeactivateService(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => ActivateService(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => CiclesService(),
+        ),
       ],
       child: MyApp(),
     );

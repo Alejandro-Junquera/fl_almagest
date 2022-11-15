@@ -1,5 +1,4 @@
 import 'package:fl_almagest/models/models.dart';
-import 'package:fl_almagest/services/activate_service.dart';
 import 'package:fl_almagest/services/services.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -45,7 +44,7 @@ class AdminScreen extends StatelessWidget {
                   label: 'Activar',
                 ),
                 SlidableAction(
-                  onPressed: deactivate(context, user.id),
+                  onPressed: deactivate(context, user.id.toString()),
                   backgroundColor: Color.fromARGB(255, 75, 81, 82),
                   foregroundColor: Colors.white,
                   icon: Icons.disabled_by_default_rounded,
@@ -93,8 +92,11 @@ activate(BuildContext context, String user_id){
 
 }
 
-deactivate(BuildContext context, int? user_id){
-
+deactivate(BuildContext context, String user_id){
+  final deactivateService = Provider.of<DeactivateService>(context);
+  // String message = await authService.activate(user_id);
+  deactivateService.deactivate(user_id);
+  final msg = deactivateService.mensaje;
 } 
 
 delete(BuildContext context, int? user_id){

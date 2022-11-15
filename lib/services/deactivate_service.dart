@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:fl_almagest/services/services.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -9,7 +8,7 @@ class DeactivateService extends ChangeNotifier {
    final String _baseUrl = 'salesin.allsites.es';
 
 Future<String> deactivate (String user_id) async{
-    final url = Uri.http(_baseUrl, '/public/api/activate',{'user_id': user_id});
+    final url = Uri.http(_baseUrl, '/public/api/deactivate',{'user_id': user_id});
     String? token = await AuthService().readToken();
     
     final resp = await http.post(url,
