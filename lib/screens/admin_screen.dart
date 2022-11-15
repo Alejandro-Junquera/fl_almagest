@@ -13,7 +13,13 @@ class AdminScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final userService = Provider.of<UserService>(context);
     final authService = Provider.of<AuthService>(context, listen: false);
-    List<DataUsers> users = userService.usuarios;
+    List<DataUsers> users0 = userService.usuarios;
+    List<DataUsers> users = [];
+    for(var i in users0){
+      if(i.deleted==0){
+        users.add(i);
+      }
+    }
     if (userService.isLoading) return LoadingScreen();
 
     return Scaffold(
@@ -31,11 +37,20 @@ class AdminScreen extends StatelessWidget {
         itemCount: users.length,
         itemBuilder: (context, index) {
           final user = users[index];
+          bool siActivo;
+          bool noActivo;
+          if(user.actived==1){
+            siActivo=false;
+            noActivo=true;
+          }else{
+            siActivo=true;
+            noActivo=false;
+          }
           return Slidable(
             startActionPane: ActionPane(
               motion:  StretchMotion(),
               children:  [
-                // A SlidableAction can have an icon and/or a label.
+                Visibility(child: 
                 SlidableAction(
                   onPressed: activate(context, user.id.toString()),
                   backgroundColor: Color(0xFF7BC043),
@@ -43,6 +58,9 @@ class AdminScreen extends StatelessWidget {
                   icon: Icons.check_circle,
                   label: 'Activar',
                 ),
+                visible: siActivo,
+                ),
+                Visibility(child: 
                 SlidableAction(
                   onPressed: deactivate(context, user.id.toString()),
                   backgroundColor: Color.fromARGB(255, 75, 81, 82),
@@ -50,6 +68,7 @@ class AdminScreen extends StatelessWidget {
                   icon: Icons.disabled_by_default_rounded,
                   label: 'Desactivar',
                 ),
+                visible: noActivo,)
               ],
             ),
             endActionPane: ActionPane(
@@ -65,7 +84,7 @@ class AdminScreen extends StatelessWidget {
                 //   label: 'Editar',
                 // ),
                 SlidableAction(
-                  onPressed: delete(context, user.id),
+                  onPressed: delete(context, user.id.toString()),
                   backgroundColor: Color(0xFFFE4A49),
                   foregroundColor: Colors.white,
                   icon: Icons.delete,
@@ -99,6 +118,9 @@ deactivate(BuildContext context, String user_id){
   final msg = deactivateService.mensaje;
 } 
 
-delete(BuildContext context, int? user_id){
-
+delete(BuildContext context, String user_id){
+final deleteService = Provider.of<DeleteService>(context);
+  // String message = await authService.activate(user_id);
+  deleteService.delete(user_id);
+  final msg = deleteService.mensaje;
 }
