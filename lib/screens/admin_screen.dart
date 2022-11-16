@@ -99,19 +99,23 @@ class AdminScreen extends StatelessWidget {
                 SlidableAction(
                   onPressed:(context){
                     AlertDialog(
-                    title: const Text('AlertDialog Title'),
-                    content: const Text('AlertDialog description'),
+                    title: const Text('Delete user'),
+                    content: const Text('Are you sure?'),
                     actions: <Widget>[
                       TextButton(
-                        onPressed: () => Navigator.pop(context, 'Cancel'),
-                        child: const Text('Cancel'),
+                        onPressed: () => Navigator.pushReplacementNamed(context, 'admin'),
+                        child: const Text('No'),
                       ),
                       TextButton(
-                        onPressed: () => Navigator.pop(context, 'OK'),
-                        child: const Text('OK'),
+                        onPressed: () { 
+                          deleteService.delete(user.id.toString());
+                          user.deleted=1;
+                          final msg = deleteService.mensaje;
+                          Navigator.pushReplacementNamed(context, 'admin');},
+                        child: const Text('Yes'),
                       ),
                     ],
-                  ), 
+                  ); 
                   /*deleteService.delete(user.id.toString());
                   user.deleted=1;
                   final msg = deleteService.mensaje; 
