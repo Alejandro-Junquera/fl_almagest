@@ -97,11 +97,25 @@ class AdminScreen extends StatelessWidget {
                 //   label: 'Editar',
                 // ),
                 SlidableAction(
-                  onPressed:(context){ 
-                  deleteService.delete(user.id.toString());
+                  onPressed:(context){
+                    AlertDialog(
+                    title: const Text('AlertDialog Title'),
+                    content: const Text('AlertDialog description'),
+                    actions: <Widget>[
+                      TextButton(
+                        onPressed: () => Navigator.pop(context, 'Cancel'),
+                        child: const Text('Cancel'),
+                      ),
+                      TextButton(
+                        onPressed: () => Navigator.pop(context, 'OK'),
+                        child: const Text('OK'),
+                      ),
+                    ],
+                  ), 
+                  /*deleteService.delete(user.id.toString());
                   user.deleted=1;
                   final msg = deleteService.mensaje; 
-                  Navigator.pushReplacementNamed(context, 'admin');
+                  Navigator.pushReplacementNamed(context, 'admin');*/
                   },
                   backgroundColor: Color(0xFFFE4A49),
                   foregroundColor: Colors.white,
@@ -120,26 +134,3 @@ class AdminScreen extends StatelessWidget {
   Widget buildUserListTile(user) => ListTile(
       contentPadding: const EdgeInsets.all(16), title: Text(user.name));
 }
-
-// activate(BuildContext context, String user_id){
-//   final activateService = Provider.of<ActivateService>(context,listen: false);
-//   // String message = await authService.activate(user_id);
-//   activateService.activate(user_id);
-//   final msg = activateService.mensaje;
-
-// }
-
-// deactivate(BuildContext context, String user_id){
-//   final deactivateService = Provider.of<DeactivateService>(context, listen: false);
-//   // String message = await authService.activate(user_id);
-//   deactivateService.deactivate(user_id);
-//   final msg = deactivateService.mensaje;
-// } 
-
-// delete(BuildContext context, String user_id){
-// final deleteService = Provider.of<DeleteService>(context, listen: false);
-//   // String message = await authService.activate(user_id);
-//   deleteService.delete(user_id);
-//   final msg = deleteService.mensaje;
-// }
-
