@@ -3,7 +3,7 @@ import 'package:fl_almagest/services/services.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'loading_screen.dart';
 
 class AdminScreen extends StatelessWidget {
@@ -141,4 +141,28 @@ class AdminScreen extends StatelessWidget {
 
   Widget buildUserListTile(user) => ListTile(
       contentPadding: const EdgeInsets.all(16), title: Text(user.name));
+
+
+  void customToast(String message, BuildContext context) {
+  showToast(
+    message,
+    textStyle: TextStyle(
+      fontSize: 14,
+      wordSpacing: 0.1,
+      color: Colors.black,
+      fontWeight: FontWeight.bold,
+    ),
+    textPadding: EdgeInsets.all(23),
+    fullWidth: true,
+    toastHorizontalMargin: 25,
+    borderRadius: BorderRadius.circular(15),
+    backgroundColor: Colors.indigo,
+    alignment: Alignment.topCenter,
+    position: StyledToastPosition.bottom,
+    duration: Duration(seconds: 3),
+    animation: StyledToastAnimation.slideFromBottom,
+    context: context,
+  );
+}
+
 }
