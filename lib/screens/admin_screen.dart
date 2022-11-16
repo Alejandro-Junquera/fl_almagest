@@ -56,6 +56,7 @@ class AdminScreen extends StatelessWidget {
                 Visibility(child: 
                 SlidableAction(
                   onPressed: (context){
+                    customToast('User activated', context);
                     activateService.activate(user.id.toString());
                     user.actived = 1; 
                     final msg = activateService.mensaje;
@@ -71,6 +72,7 @@ class AdminScreen extends StatelessWidget {
                 Visibility(child: 
                 SlidableAction(
                   onPressed:(context){
+                      customToast('User deactivated', context);
                       deactivateService.deactivate(user.id.toString());
                       user.actived = 0; 
                       final msg = deactivateService.mensaje;
