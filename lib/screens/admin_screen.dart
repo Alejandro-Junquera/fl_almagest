@@ -98,6 +98,9 @@ class AdminScreen extends StatelessWidget {
                 // ),
                 SlidableAction(
                   onPressed:(context){
+                    showDialog<String>(
+                    context: context,
+                    builder: (BuildContext context) => 
                     AlertDialog(
                     title: const Text('Delete user'),
                     content: const Text('Are you sure?'),
@@ -115,7 +118,8 @@ class AdminScreen extends StatelessWidget {
                         child: const Text('Yes'),
                       ),
                     ],
-                  ); 
+                  ),
+                    ); 
                   /*deleteService.delete(user.id.toString());
                   user.deleted=1;
                   final msg = deleteService.mensaje; 
