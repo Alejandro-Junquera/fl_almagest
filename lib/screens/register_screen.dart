@@ -1,4 +1,5 @@
 import 'package:fl_almagest/providers/register_form_provider.dart';
+import 'package:fl_almagest/services/register_service.dart';
 import 'package:fl_almagest/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import '../models/cicles.dart';
@@ -70,7 +71,6 @@ class _RegisterForm extends StatelessWidget {
           children: [
             TextFormField(
                 autocorrect: false,
-                obscureText: true,
                 keyboardType: TextInputType.name,
                 decoration: InputDecorations.authInputDecoration(
                     hinText: 'Pepito',
@@ -78,14 +78,13 @@ class _RegisterForm extends StatelessWidget {
                     prefixIcon: Icons.supervised_user_circle),
                 onChanged: (value) => registerForm.name = value,
                 validator: (value) {
-                  return (value != null && value.length >= 6)
+                  return (value != null && value.length >= 3)
                       ? null
-                      : 'Name must have more than 6 characters';
+                      : 'Name must have more than 3 characters';
                 }),
             const SizedBox(height: 5),
             TextFormField(
                 autocorrect: false,
-                obscureText: true,
                 keyboardType: TextInputType.name,
                 decoration: InputDecorations.authInputDecoration(
                     hinText: 'Perez Perez',
@@ -93,9 +92,9 @@ class _RegisterForm extends StatelessWidget {
                     prefixIcon: Icons.supervised_user_circle_outlined),
                 onChanged: (value) => registerForm.surname = value,
                 validator: (value) {
-                  return (value != null && value.length >= 12)
+                  return (value != null && value.length >= 5)
                       ? null
-                      : 'Name must have more than 12 characters';
+                      : 'Name must have more than 5 characters';
                 }),
             const SizedBox(height: 5),
             TextFormField(
@@ -177,10 +176,36 @@ class _RegisterForm extends StatelessWidget {
                   ? null
                   : () async {
                       FocusScope.of(context).unfocus();
-                      final authService =
-                          Provider.of<AuthService>(context, listen: false);
-                      if (!registerForm.isValidForm()) return;
-                      Navigator.pushReplacementNamed(context, 'admin');
+                        final registerService =
+                            Provider.of<RegisterService>(context,listen: false);
+
+                        if (!registerForm.isValidForm()) return;
+
+                        // registerForm.isLoading = true;
+
+                        //validar si el login es correcto
+                        final String? errorMessage =
+                            await registerService.register(
+                                registerForm.name,
+                                registerForm.surname,
+                                registerForm.email,
+                                registerForm.password,
+                                registerForm.c_password,
+                                registerForm.cicle_id);
+
+                        if (errorMessage == null) {
+                          Navigator.pushReplacementNamed(context, 'login');
+                        } else {
+                          //mostrar error en pantalla
+                          print(errorMessage);
+                          registerForm.isLoading = false;
+                        }
+
+                      // FocusScope.of(context).unfocus();
+                      // final authService =
+                      //     Provider.of<AuthService>(context, listen: false);
+                      // if (!registerForm.isValidForm()) return;
+                      // Navigator.pushReplacementNamed(context, 'admin');
                     },
             ),
           ],
