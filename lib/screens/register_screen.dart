@@ -2,6 +2,7 @@ import 'package:fl_almagest/providers/register_form_provider.dart';
 import 'package:fl_almagest/services/register_service.dart';
 import 'package:fl_almagest/widgets/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import '../models/cicles.dart';
 import '../ui/input_decorations.dart';
 import '../services/services.dart';
@@ -127,7 +128,7 @@ class _RegisterForm extends StatelessWidget {
                 validator: (value) {
                   return (value != null && value.length >= 6)
                       ? null
-                      : 'the password must have more than 6 characters';
+                      : 'The password must have more than 6 characters';
                 }),
             const SizedBox(height: 5),
             TextFormField(
@@ -142,7 +143,7 @@ class _RegisterForm extends StatelessWidget {
                 validator: (value) {
                   return (value != null && value.length >= 6)
                       ? null
-                      : 'the password must have more than 6 characters';
+                      : 'The password must have more than 6 characters';
                 }),
             const SizedBox(height: 5),
             // const SizedBox(height: 5),
@@ -168,7 +169,7 @@ class _RegisterForm extends StatelessWidget {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 80, vertical: 15),
                 child: Text(
-                  registerForm.isLoading ? 'Wait' : 'submit',
+                  registerForm.isLoading ? 'Wait' : 'Submit',
                   style: const TextStyle(color: Colors.white),
                 ),
               ),
@@ -213,4 +214,27 @@ class _RegisterForm extends StatelessWidget {
       ),
     );
   }
+  
+  void customToast(String message, BuildContext context) {
+  showToast(
+    message,
+    textStyle: TextStyle(
+      fontSize: 14,
+      wordSpacing: 0.1,
+      color: Colors.black,
+      fontWeight: FontWeight.bold,
+    ),
+    textPadding: EdgeInsets.all(23),
+    fullWidth: true,
+    toastHorizontalMargin: 25,
+    borderRadius: BorderRadius.circular(15),
+    backgroundColor: Colors.indigo,
+    alignment: Alignment.topCenter,
+    position: StyledToastPosition.bottom,
+    duration: Duration(seconds: 3),
+    animation: StyledToastAnimation.slideFromBottom,
+    context: context,
+  );
+}
+
 }
