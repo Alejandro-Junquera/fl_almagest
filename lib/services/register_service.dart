@@ -51,4 +51,22 @@ class RegisterService extends ChangeNotifier {
       //   return decodedResp['error']['message'];
       // }
     }
+
+    /*final Map<String, dynamic> duplicateRegister = json.decode(resp.body);
+      if (duplicateRegister.containsValue(true)) {
+        duplicateRegister.forEach((key, value) {
+          if (key == 'data') {
+            storage.write(key: 'token', value: value['token']);
+          }
+        });
+      } else {
+        String? error = '';
+
+        error = 'Error to register. The email is already taken';
+
+        resp1 = error;
+      }
+      return resp1;
+    }*/
+    
 }
