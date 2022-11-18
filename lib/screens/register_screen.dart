@@ -1,5 +1,4 @@
 import 'package:fl_almagest/providers/register_form_provider.dart';
-import 'package:fl_almagest/services/register_service.dart';
 import 'package:fl_almagest/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
@@ -63,7 +62,6 @@ class _RegisterForm extends StatelessWidget {
     final registerForm = Provider.of<RegisterFormProvider>(context);
     final ciclesService = Provider.of<CiclesService>(context);
     List<Data> ciclos= ciclesService.ciclos;
-    // print(selectedItem);
     return Container(
       child: Form(
         key: registerForm.formKey,
@@ -216,14 +214,14 @@ class _RegisterForm extends StatelessWidget {
       color: Colors.black,
       fontWeight: FontWeight.bold,
     ),
-    textPadding: EdgeInsets.all(23),
+    textPadding: const EdgeInsets.all(23),
     fullWidth: true,
     toastHorizontalMargin: 25,
     borderRadius: BorderRadius.circular(15),
     backgroundColor: Colors.indigo,
     alignment: Alignment.topCenter,
     position: StyledToastPosition.bottom,
-    duration: Duration(seconds: 3),
+    duration: const Duration(seconds: 3),
     animation: StyledToastAnimation.slideFromBottom,
     context: context,
   );

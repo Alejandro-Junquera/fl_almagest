@@ -7,8 +7,8 @@ class DeleteService extends ChangeNotifier {
   String mensaje ='';
    final String _baseUrl = 'salesin.allsites.es';
 
-Future<String> delete (String user_id) async{
-    final url = Uri.http(_baseUrl, '/public/api/delete',{'user_id': user_id});
+Future<String> delete (String userId) async{
+    final url = Uri.http(_baseUrl, '/public/api/delete',{'user_id': userId});
     String? token = await AuthService().readToken();
     
     final resp = await http.post(url,

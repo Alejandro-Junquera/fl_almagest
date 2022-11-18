@@ -31,16 +31,6 @@ class UserService extends ChangeNotifier {
     for(var i in user.data!){
       usuarios.add(i);
     }
-    // decodedResp.forEach((key, value) {
-    //   if (key == 'data') {
-    //     List<dynamic> userD = value;
-    //     for (int i = 0; i < userD.length; i++) {
-    //       final valueUser = DataUsers.fromJson(userD[i]);
-    //       usuarios.add(valueUser);
-    //     }
-    //   }
-     
-    // });
     isLoading = false;
     notifyListeners();
     return usuarios;

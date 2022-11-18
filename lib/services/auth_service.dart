@@ -5,7 +5,6 @@ import 'package:http/http.dart' as http;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class AuthService extends ChangeNotifier {
-  //Esta list es la que llama desde adminScreen
   final String _baseUrl = 'salesin.allsites.es';
   final storage = const FlutterSecureStorage();
   bool isLoading = true;
@@ -14,10 +13,6 @@ class AuthService extends ChangeNotifier {
   readToken() async {
     return await storage.read(key: 'token') ?? '';
   }
-  //usuario: confirmado@gmail.com
-  //registrado@gmail.com
-  //activado@gmail.com
-  //password: 12345678
 
   Future<String?> login(String email, String password) async {
     final Map<String, dynamic> authData = {

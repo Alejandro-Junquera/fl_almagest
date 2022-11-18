@@ -8,8 +8,8 @@ class ActivateService extends ChangeNotifier {
   String mensaje ='';
    final String _baseUrl = 'salesin.allsites.es';
 
-  Future<String> activate (String user_id) async{
-      final url = Uri.http(_baseUrl, '/public/api/activate',{'user_id': user_id});
+  Future<String> activate (String userId) async{
+      final url = Uri.http(_baseUrl, '/public/api/activate',{'user_id': userId});
       String? token = await AuthService().readToken();
       
       final resp = await http.post(url,

@@ -9,14 +9,14 @@ class RegisterService extends ChangeNotifier {
   final storage = const FlutterSecureStorage();
 
   Future<String?> register( String name, String surname, String email, String password,
-  String c_password, int cicle_id ) async {
+  String cPassword, int cicleId ) async {
       final Map<String, dynamic> authData = {
         'name': name,
         'surname': surname,
         'email': email,
         'password': password,
-        'c_password': c_password,
-        'cicle_id': cicle_id,
+        'c_password': cPassword,
+        'cicle_id': cicleId,
       };
       final url = Uri.http(_baseUrl, '/public/api/register', {});
 
@@ -37,5 +37,6 @@ class RegisterService extends ChangeNotifier {
         
         return decodedResp['message'];
       }
+      return null;
     }    
 }
