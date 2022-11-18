@@ -30,43 +30,12 @@ class RegisterService extends ChangeNotifier {
       final Map<String, dynamic> decodedResp = json.decode(resp.body);
 
       if (decodedResp['success'] == true) {
-        // Token hay que guardarlo en un lugar seguro
-        // decodedResp['idToken'];
         await storage.write(key: 'token', value: decodedResp['data']['token']);
         await storage.write(
             key: 'name', value: decodedResp['data']['name'].toString());
       } else {
+        
         return decodedResp['message'];
       }
-
-      // final resp = await http.post(url, body: json.encode(authData));
-      // final Map<String, dynamic> decodedResp = json.decode(resp.body);
-
-      // if (decodedResp.containsKey('idToken')) {
-      //   // Token hay que guardarlo en un lugar seguro
-      //   await storage.write(key: 'token', value: decodedResp['idToken']);
-      //   // decodedResp['idToken'];
-      //   return null;
-      // } else {
-      //   return decodedResp['error']['message'];
-      // }
-    }
-
-    /*final Map<String, dynamic> duplicateRegister = json.decode(resp.body);
-      if (duplicateRegister.containsValue(true)) {
-        duplicateRegister.forEach((key, value) {
-          if (key == 'data') {
-            storage.write(key: 'token', value: value['token']);
-          }
-        });
-      } else {
-        String? error = '';
-
-        error = 'Error to register. The email is already taken';
-
-        resp1 = error;
-      }
-      return resp1;
-    }*/
-    
+    }    
 }

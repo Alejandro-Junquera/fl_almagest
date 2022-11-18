@@ -126,14 +126,6 @@ class _LoginForm extends StatelessWidget {
               disabledColor: Colors.grey,
               elevation: 0,
               color: Colors.deepPurple,
-              child: Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 80, vertical: 15),
-                child: Text(
-                  loginForm.isLoading ? 'Wait' : 'Submit',
-                  style: const TextStyle(color: Colors.white),
-                ),
-              ),
               onPressed: loginForm.isLoading
                   ? null
                   : () async {
@@ -159,6 +151,14 @@ class _LoginForm extends StatelessWidget {
                       //  print('Usuario no verificado');
                       //}
                     },
+              child: Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 80, vertical: 15),
+                child: Text(
+                  loginForm.isLoading ? 'Wait' : 'Submit',
+                  style: const TextStyle(color: Colors.white),
+                ),
+              ),
             ),
           ],
         ),

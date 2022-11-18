@@ -146,12 +146,12 @@ class _RegisterForm extends StatelessWidget {
                       : 'The password must have more than 6 characters';
                 }),
             const SizedBox(height: 5),
-            // const SizedBox(height: 5),
             DropdownButtonFormField(
+              hint: const Text('Select a cicle'),
               items: ciclos.map((e){
                 return DropdownMenuItem(
-                  child: Text(e.name.toString()),
                   value: e.id,
+                  child: Text(e.name.toString()),
                 );
               }).toList(),
                onChanged: (value){
@@ -165,6 +165,33 @@ class _RegisterForm extends StatelessWidget {
               disabledColor: Colors.grey,
               elevation: 0,
               color: Colors.deepPurple,
+              onPressed: registerForm.isLoading
+                  ? null
+                  : () async {
+                      FocusScope.of(context).unfocus();
+                        final registerService =
+                            Provider.of<RegisterService>(context,listen: false);
+                            if (!registerForm.isValidForm()) return;
+                            final String? errorMessage =
+                                await registerService.register(
+                                    registerForm.name,
+                                    registerForm.surname,
+                                    registerForm.email,
+                                    registerForm.password,
+                                    registerForm.c_password,
+                                    registerForm.cicle_id);
+                            if(registerForm.password != registerForm.c_password){
+                              customToast("The passwords don't match", context);
+                              registerForm.isLoading = false;
+                            }else{
+                            if (errorMessage == null) {
+                              Navigator.pushReplacementNamed(context, 'login');
+                            } else {
+                              customToast('The email is already registered', context);
+                              registerForm.isLoading = false;
+                            }
+                            }
+                    },
               child: Container(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 80, vertical: 15),
@@ -173,41 +200,6 @@ class _RegisterForm extends StatelessWidget {
                   style: const TextStyle(color: Colors.white),
                 ),
               ),
-              onPressed: registerForm.isLoading
-                  ? null
-                  : () async {
-                      FocusScope.of(context).unfocus();
-                        final registerService =
-                            Provider.of<RegisterService>(context,listen: false);
-
-                        if (!registerForm.isValidForm()) return;
-
-                        // registerForm.isLoading = true;
-
-                        //validar si el login es correcto
-                        final String? errorMessage =
-                            await registerService.register(
-                                registerForm.name,
-                                registerForm.surname,
-                                registerForm.email,
-                                registerForm.password,
-                                registerForm.c_password,
-                                registerForm.cicle_id);
-
-                        if (errorMessage == null) {
-                          Navigator.pushReplacementNamed(context, 'login');
-                        } else {
-                          //mostrar error en pantalla
-                          print(errorMessage);
-                          registerForm.isLoading = false;
-                        }
-
-                      // FocusScope.of(context).unfocus();
-                      // final authService =
-                      //     Provider.of<AuthService>(context, listen: false);
-                      // if (!registerForm.isValidForm()) return;
-                      // Navigator.pushReplacementNamed(context, 'admin');
-                    },
             ),
           ],
         ),
@@ -218,7 +210,7 @@ class _RegisterForm extends StatelessWidget {
   void customToast(String message, BuildContext context) {
   showToast(
     message,
-    textStyle: TextStyle(
+    textStyle: const TextStyle(
       fontSize: 14,
       wordSpacing: 0.1,
       color: Colors.black,
