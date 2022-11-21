@@ -9,23 +9,17 @@ class VerifyService extends ChangeNotifier {
   final String _baseUrl = 'salesin.allsites.es';
   final storage = const FlutterSecureStorage();
 
-   Future<bool?> isVerify() async {
-    
-    var id = await storage.read(key: 'id') ?? '';
-    final Map<String, dynamic> userId = {
-      'user_id': id,
-    };
+  isVerify(String id ) async {
+
     String? token = await AuthService().readToken();
 
-    final url = Uri.http(_baseUrl, '/public/api/confirm', {});
+    final url = Uri.http(_baseUrl, '/public/api/confirm', {'user_id': id});
     final resp = await http.post(url,
         headers: {
-          'Content-type': 'application/json',
           'Accept': 'application/json',
           'Authorization': 'Bearer $token',
-        },
-        body: json.encode(userId));
+        });
     final Map<String, dynamic> decodedResp = json.decode(resp.body);
-    return decodedResp['success'];
   }
+  static void verifyService(id) {}
 }
