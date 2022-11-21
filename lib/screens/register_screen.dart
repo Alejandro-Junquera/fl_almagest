@@ -167,6 +167,8 @@ class _RegisterForm extends StatelessWidget {
                   ? null
                   : () async {
                       FocusScope.of(context).unfocus();
+                        final verifyService =
+                          Provider.of<VerifyService>(context,listen: false);
                         final registerService =
                             Provider.of<RegisterService>(context,listen: false);
                             if (!registerForm.isValidForm()) return;
@@ -183,6 +185,7 @@ class _RegisterForm extends StatelessWidget {
                               registerForm.isLoading = false;
                             }else{
                             if (errorMessage == null) {
+                              verifyService.isVerify();
                               Navigator.pushReplacementNamed(context, 'login');
                             } else {
                               customToast('The email is already registered', context);
