@@ -6,7 +6,7 @@ class LoadingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-     backgroundColor:Color.fromRGBO(63, 63, 156, 1),
+     backgroundColor:Color.fromARGB(255, 44, 145, 228),
       body: Center(
         child: CircularProgressIndicator(
         color: Colors.white

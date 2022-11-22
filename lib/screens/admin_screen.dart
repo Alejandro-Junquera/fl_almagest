@@ -38,7 +38,7 @@ class AdminScreen extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           title: const Text('Lista de usuarios: '),
-          backgroundColor: Color.fromRGBO(63, 63, 156, 1),
+          backgroundColor: Color.fromARGB(255, 44, 145, 228),
           leading: IconButton(
               icon: Icon(Icons.login_outlined),
               onPressed: () {
