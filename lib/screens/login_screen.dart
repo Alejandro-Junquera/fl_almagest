@@ -23,7 +23,10 @@ class LoginScreen extends StatelessWidget {
                   const SizedBox(
                     height: 10,
                   ),
-                  Text('Login', style: Theme.of(context).textTheme.headline4),
+                  Text(
+                    'Login',
+                    style: Theme.of(context).textTheme.headline4,
+                  ),
                   const SizedBox(height: 30),
                   ChangeNotifierProvider(
                     create: (_) => LoginFormProvider(),
@@ -52,8 +55,6 @@ class LoginScreen extends StatelessWidget {
     );
   }
 }
-
-
 
 class _LoginForm extends StatelessWidget {
   const _LoginForm({super.key});
@@ -105,7 +106,7 @@ class _LoginForm extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10)),
               disabledColor: Colors.grey,
               elevation: 0,
-              color: Color.fromARGB(255, 44, 145, 228),
+              color: Colors.blueGrey[600],
               onPressed: loginForm.isLoading
                   ? null
                   : () async {
@@ -115,21 +116,26 @@ class _LoginForm extends StatelessWidget {
                       if (!loginForm.isValidForm()) return;
                       final String? data = await authService.login(
                           loginForm.email, loginForm.password);
-                      //final bool? verified = await authService.isVerify();
                       final splitted = data?.split(',');
-                      // if (verified!) {
                       if (splitted?[0] == 'a') {
                         Navigator.pushReplacementNamed(context, 'admin');
-                      } else if (splitted?[0] == 'u' && splitted?[1] == '1') {
-                        Navigator.pushReplacementNamed(context, 'user');
-                      } else if (splitted?[0] == 'u' && splitted?[1] == '0') {
-                        customToast('Admin must active your account', context);
+                      } else if (splitted?[0] == 'u') {
+                        final userService = Provider.of<UserAloneService>(
+                            context,
+                            listen: false);
+                        final int? deleted = await userService.readUserAlone();
+                        print(deleted);
+                        if (deleted == 1) {
+                          customToast('Your user was deleted', context);
+                        } else if (splitted?[1] == '1') {
+                          Navigator.pushReplacementNamed(context, 'user');
+                        } else {
+                          customToast(
+                              'Admin must active your account', context);
+                        }
                       } else {
                         customToast('Email or password incorrect', context);
                       }
-                      // } else {
-                      //  print('Usuario no verificado');
-                      //}
                     },
               child: Container(
                 padding:
@@ -145,25 +151,26 @@ class _LoginForm extends StatelessWidget {
       ),
     );
   }
+
   void customToast(String message, BuildContext context) {
-  showToast(
-    message,
-    textStyle: const TextStyle(
-      fontSize: 14,
-      wordSpacing: 0.1,
-      color: Colors.black,
-      fontWeight: FontWeight.bold,
-    ),
-    textPadding: const EdgeInsets.all(23),
-    fullWidth: true,
-    toastHorizontalMargin: 25,
-    borderRadius: BorderRadius.circular(15),
-    backgroundColor: Colors.indigo,
-    alignment: Alignment.topCenter,
-    position: StyledToastPosition.bottom,
-    duration: const Duration(seconds: 3),
-    animation: StyledToastAnimation.slideFromBottom,
-    context: context,
-  );
-}
+    showToast(
+      message,
+      textStyle: const TextStyle(
+        fontSize: 14,
+        wordSpacing: 0.1,
+        color: Colors.white,
+        fontWeight: FontWeight.bold,
+      ),
+      textPadding: const EdgeInsets.all(23),
+      fullWidth: true,
+      toastHorizontalMargin: 25,
+      borderRadius: BorderRadius.circular(15),
+      backgroundColor: Colors.blueGrey[500],
+      alignment: Alignment.topCenter,
+      position: StyledToastPosition.bottom,
+      duration: const Duration(seconds: 3),
+      animation: StyledToastAnimation.slideFromBottom,
+      context: context,
+    );
+  }
 }

@@ -26,7 +26,11 @@ class _HeaderIcon extends StatelessWidget {
       child: Container(
         width: double.infinity,
         margin: const EdgeInsets.only(top: 30),
-        child: const Icon(Icons.person_pin, color: Colors.white, size: 100),
+        child: const Icon(
+          Icons.person_pin_circle,
+          color: Colors.white,
+          size: 100,
+        ),
       ),
     );
   }
@@ -53,10 +57,7 @@ class _PurpleBox extends StatelessWidget {
   }
 
   BoxDecoration _purpleBackground() => BoxDecoration(
-          gradient: LinearGradient(colors: [
-       Color.fromARGB(255, 44, 145, 228),
-        Color.fromRGBO(90, 70, 178, 1)
-      ]));
+      gradient: LinearGradient(colors: [Colors.blueGrey, Colors.blueAccent]));
 }
 
 class _Triangle extends StatelessWidget {

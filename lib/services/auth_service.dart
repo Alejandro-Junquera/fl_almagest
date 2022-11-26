@@ -8,10 +8,14 @@ class AuthService extends ChangeNotifier {
   final String _baseUrl = 'salesin.allsites.es';
   final storage = const FlutterSecureStorage();
   bool isLoading = true;
-  String mensaje ='';
+  String mensaje = '';
 
   readToken() async {
     return await storage.read(key: 'token') ?? '';
+  }
+
+  readId() async {
+    return await storage.read(key: 'id') ?? '';
   }
 
   Future<String?> login(String email, String password) async {
@@ -29,6 +33,7 @@ class AuthService extends ChangeNotifier {
         },
         body: json.encode(authData));
     final Map<String, dynamic> decodedResp = json.decode(resp.body);
+    print(decodedResp);
     if (decodedResp['success'] == true) {
       await storage.write(key: 'token', value: decodedResp['data']['token']);
       await storage.write(
@@ -70,7 +75,7 @@ class AuthService extends ChangeNotifier {
   //   return decodedResp['success'];
   // }
 
-  Future logout() async{
+  Future logout() async {
     await storage.deleteAll();
     return;
   }

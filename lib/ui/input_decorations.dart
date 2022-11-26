@@ -8,16 +8,16 @@ class InputDecorations {
   }) {
     return InputDecoration(
         enabledBorder: const UnderlineInputBorder(
-          borderSide: BorderSide(color: Color.fromARGB(255, 44, 145, 228)),
+          borderSide: BorderSide(color: Colors.blueGrey),
         ),
         focusedBorder: const UnderlineInputBorder(
-          borderSide: BorderSide(color: Color.fromARGB(255, 44, 145, 228), width: 2),
+          borderSide: BorderSide(color: Colors.blue, width: 2),
         ),
         hintText: hinText,
         labelText: labelText,
         labelStyle: const TextStyle(color: Colors.grey),
         prefixIcon: prefixIcon != null
-            ? Icon(prefixIcon, color:Color.fromARGB(255, 44, 145, 228))
+            ? Icon(prefixIcon, color: Colors.blueGrey[600])
             : null);
   }
 }

@@ -1,3 +1,4 @@
+import 'package:fl_almagest/models/models.dart';
 import 'package:fl_almagest/screens/screens.dart';
 import 'package:flutter/material.dart';
 import 'package:fl_almagest/services/services.dart';
@@ -35,6 +36,9 @@ class AppState extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (_) => VerifyService(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => UserAloneService(),
         ),
       ],
       child: MyApp(),

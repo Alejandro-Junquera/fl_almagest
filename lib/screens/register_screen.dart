@@ -56,12 +56,12 @@ class RegisterScreen extends StatelessWidget {
 
 class _RegisterForm extends StatelessWidget {
   const _RegisterForm({super.key});
- 
+
   @override
   Widget build(BuildContext context) {
     final registerForm = Provider.of<RegisterFormProvider>(context);
     final ciclesService = Provider.of<CiclesService>(context);
-    List<Data> ciclos= ciclesService.ciclos;
+    List<Data> ciclos = ciclesService.ciclos;
     return Container(
       child: Form(
         key: registerForm.formKey,
@@ -124,7 +124,7 @@ class _RegisterForm extends StatelessWidget {
                     prefixIcon: Icons.lock_open),
                 onChanged: (value) => registerForm.password = value,
                 validator: (value) {
-                  return (value != null && value.length >= 6)
+                  return (value != null && value.length >= 2)
                       ? null
                       : 'The password must have more than 6 characters';
                 }),
@@ -146,49 +146,53 @@ class _RegisterForm extends StatelessWidget {
             const SizedBox(height: 5),
             DropdownButtonFormField(
               hint: const Text('Select a cicle'),
-              items: ciclos.map((e){
+              items: ciclos.map((e) {
                 return DropdownMenuItem(
                   value: e.id,
                   child: Text(e.name.toString()),
                 );
               }).toList(),
-               onChanged: (value){
-                  registerForm.cicle_id= value!;
-               }
-               ),
-            const SizedBox(height: 5),
+              onChanged: (value) {
+                registerForm.cicle_id = value!;
+              },
+              validator: (value) {
+                return (value != null && value != 0) ? null : 'select a cicle';
+              },
+            ),
+            const SizedBox(height: 15),
             MaterialButton(
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10)),
               disabledColor: Colors.grey,
               elevation: 0,
-              color: Color.fromARGB(255, 44, 145, 228),
+              color: Colors.blueGrey[600],
               onPressed: registerForm.isLoading
                   ? null
                   : () async {
                       FocusScope.of(context).unfocus();
-                        final registerService =
-                            Provider.of<RegisterService>(context,listen: false);
-                            if (!registerForm.isValidForm()) return;
-                            final String? errorMessage =
-                                await registerService.register(
-                                    registerForm.name,
-                                    registerForm.surname,
-                                    registerForm.email,
-                                    registerForm.password,
-                                    registerForm.c_password,
-                                    registerForm.cicle_id);
-                            if(registerForm.password != registerForm.c_password){
-                              customToast("The passwords don't match", context);
-                              registerForm.isLoading = false;
-                            }else{
-                            if (errorMessage == null) {
-                              Navigator.pushReplacementNamed(context, 'login');
-                            } else {
-                              customToast('The email is already registered', context);
-                              registerForm.isLoading = false;
-                            }
-                            }
+                      final registerService =
+                          Provider.of<RegisterService>(context, listen: false);
+                      if (!registerForm.isValidForm()) return;
+                      final String? errorMessage =
+                          await registerService.register(
+                              registerForm.name,
+                              registerForm.surname,
+                              registerForm.email,
+                              registerForm.password,
+                              registerForm.c_password,
+                              registerForm.cicle_id);
+                      if (registerForm.password != registerForm.c_password) {
+                        customToast("The passwords don't match", context);
+                        registerForm.isLoading = false;
+                      } else {
+                        if (errorMessage == null) {
+                          Navigator.pushReplacementNamed(context, 'login');
+                        } else {
+                          customToast(
+                              'The email is already registered', context);
+                          registerForm.isLoading = false;
+                        }
+                      }
                     },
               child: Container(
                 padding:
@@ -204,27 +208,26 @@ class _RegisterForm extends StatelessWidget {
       ),
     );
   }
-  
-  void customToast(String message, BuildContext context) {
-  showToast(
-    message,
-    textStyle: const TextStyle(
-      fontSize: 14,
-      wordSpacing: 0.1,
-      color: Colors.black,
-      fontWeight: FontWeight.bold,
-    ),
-    textPadding: const EdgeInsets.all(23),
-    fullWidth: true,
-    toastHorizontalMargin: 25,
-    borderRadius: BorderRadius.circular(15),
-    backgroundColor: Colors.indigo,
-    alignment: Alignment.topCenter,
-    position: StyledToastPosition.bottom,
-    duration: const Duration(seconds: 3),
-    animation: StyledToastAnimation.slideFromBottom,
-    context: context,
-  );
-}
 
+  void customToast(String message, BuildContext context) {
+    showToast(
+      message,
+      textStyle: const TextStyle(
+        fontSize: 14,
+        wordSpacing: 0.1,
+        color: Colors.white,
+        fontWeight: FontWeight.bold,
+      ),
+      textPadding: const EdgeInsets.all(23),
+      fullWidth: true,
+      toastHorizontalMargin: 25,
+      borderRadius: BorderRadius.circular(15),
+      backgroundColor: Colors.blueGrey[500],
+      alignment: Alignment.topCenter,
+      position: StyledToastPosition.bottom,
+      duration: const Duration(seconds: 3),
+      animation: StyledToastAnimation.slideFromBottom,
+      context: context,
+    );
+  }
 }
