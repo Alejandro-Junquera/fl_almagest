@@ -13,7 +13,6 @@ class GetArticleFamilyService extends ChangeNotifier{
   bool isLoading = true;
 
 getArticles(String id) async {
-    String? token = await storage.read(key: 'token') ?? '';
     isLoading = true;
     notifyListeners();
     final url = Uri.http(_baseUrl, '/public/api/mostrarArt');
