@@ -10,3 +10,6 @@ export 'package:fl_almagest/services/register_service.dart';
 export 'package:fl_almagest/services/user_alone.dart';
 export 'package:fl_almagest/services/users_service.dart';
 export 'package:fl_almagest/services/verify_service.dart';
+export 'package:fl_almagest/services/get_article_family.dart';
+export 'package:fl_almagest/services/get_article.dart';
+export 'package:fl_almagest/services/get_articles.dart';
