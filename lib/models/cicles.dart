@@ -30,21 +30,56 @@ class Cicles {
 class Data {
   int? id;
   String? name;
-  String? img;
+  String? address;
+  String? city;
+  String? cif;
+  String? email;
+  String? phone;
+  String? delTermId;
+  int? transportId;
+  String? paymentTermId;
+  String? discountId;
 
-  Data({this.id, this.name, this.img});
+  Data(
+      {this.id,
+      this.name,
+      this.address,
+      this.city,
+      this.cif,
+      this.email,
+      this.phone,
+      this.delTermId,
+      this.transportId,
+      this.paymentTermId,
+      this.discountId});
 
   Data.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
-    img = json['img'];
+    address = json['address'];
+    city = json['city'];
+    cif = json['cif'];
+    email = json['email'];
+    phone = json['phone'];
+    delTermId = json['del_term_id'];
+    transportId = json['transport_id'];
+    paymentTermId = json['payment_term_id'];
+    discountId = json['discount_id'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
     data['name'] = this.name;
-    data['img'] = this.img;
+    data['address'] = this.address;
+    data['city'] = this.city;
+    data['cif'] = this.cif;
+    data['email'] = this.email;
+    data['phone'] = this.phone;
+    data['del_term_id'] = this.delTermId;
+    data['transport_id'] = this.transportId;
+    data['payment_term_id'] = this.paymentTermId;
+    data['discount_id'] = this.discountId;
     return data;
   }
 }

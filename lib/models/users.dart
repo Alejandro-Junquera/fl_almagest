@@ -29,56 +29,60 @@ class Users {
 
 class DataUsers {
   int? id;
-  String? name;
-  String? surname;
-  int? cicleId;
+  String? firstname;
+  String? secondname;
+  int? companyId;
   int? actived;
   String? email;
   String? type;
-  int? numOfferApplied;
+  int? emailConfirmed;
   int? deleted;
-  String? emailVerifiedAt;
+  int? iscontact;
+  String? company;
   String? createdAt;
 
   DataUsers(
       {this.id,
-      this.name,
-      this.surname,
-      this.cicleId,
+      this.firstname,
+      this.secondname,
+      this.companyId,
       this.actived,
       this.email,
       this.type,
-      this.numOfferApplied,
+      this.emailConfirmed,
       this.deleted,
-      this.emailVerifiedAt,
+      this.iscontact,
+      this.company,
       this.createdAt});
 
   DataUsers.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    name = json['name'];
-    surname = json['surname'];
-    cicleId = json['cicle_id'];
+    firstname = json['firstname'];
+    secondname = json['secondname'];
+    companyId = json['company_id'];
     actived = json['actived'];
     email = json['email'];
     type = json['type'];
-    numOfferApplied = json['num_offer_applied'];
+    emailConfirmed = json['email_confirmed'];
     deleted = json['deleted'];
-    emailVerifiedAt = json['email_verified_at'];
+    iscontact = json['iscontact'];
+    company = json['company'];
     createdAt = json['created_at'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
-    data['name'] = this.name;
-    data['surname'] = this.surname;
-    data['cicle_id'] = this.cicleId;
+    data['firstname'] = this.firstname;
+    data['secondname'] = this.secondname;
+    data['company_id'] = this.companyId;
     data['actived'] = this.actived;
     data['email'] = this.email;
     data['type'] = this.type;
-    data['num_offer_applied'] = this.numOfferApplied;
+    data['email_confirmed'] = this.emailConfirmed;
     data['deleted'] = this.deleted;
-    data['email_verified_at'] = this.emailVerifiedAt;
+    data['iscontact'] = this.iscontact;
+    data['company'] = this.company;
     data['created_at'] = this.createdAt;
     return data;
   }

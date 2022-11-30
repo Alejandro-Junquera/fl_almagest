@@ -80,7 +80,7 @@ class _AdminScreenState extends State<AdminScreen> {
                                 onPressed: (context) {
                                   customToast(
                                       'User ' +
-                                          users[index].name.toString() +
+                                          users[index].firstname.toString() +
                                           ' activated',
                                       context);
                                   activateService.activate(user.id.toString());
@@ -101,7 +101,7 @@ class _AdminScreenState extends State<AdminScreen> {
                                 onPressed: (context) {
                                   customToast(
                                       'User ' +
-                                          users[index].name.toString() +
+                                          users[index].firstname.toString() +
                                           ' deactivated',
                                       context);
                                   deactivateService
@@ -152,7 +152,9 @@ class _AdminScreenState extends State<AdminScreen> {
                                         onPressed: () {
                                           customToast(
                                               'User ' +
-                                                  users[index].name.toString() +
+                                                  users[index]
+                                                      .firstname
+                                                      .toString() +
                                                   ' deleted ',
                                               context);
                                           deleteService
@@ -200,7 +202,7 @@ class _AdminScreenState extends State<AdminScreen> {
         size: 50,
       ),
       contentPadding: const EdgeInsets.all(16),
-      title: Text(user.name + ' ' + user.surname),
+      title: Text(user.firstname + ' ' + user.secondname),
       subtitle: Text(user.email));
 
   void customToast(String message, BuildContext context) {

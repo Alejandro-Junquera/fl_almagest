@@ -145,7 +145,7 @@ class _RegisterForm extends StatelessWidget {
                 }),
             const SizedBox(height: 5),
             DropdownButtonFormField(
-              hint: const Text('Select a cicle'),
+              hint: const Text('Select a company'),
               items: ciclos.map((e) {
                 return DropdownMenuItem(
                   value: e.id,

@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class AuthService extends ChangeNotifier {
-  final String _baseUrl = 'salesin.allsites.es';
+  final String _baseUrl = 'semillero.allsites.es';
   final storage = const FlutterSecureStorage();
   bool isLoading = true;
   String mensaje = '';
@@ -40,7 +40,9 @@ class AuthService extends ChangeNotifier {
           key: 'id', value: decodedResp['data']['id'].toString());
       return decodedResp['data']['type'] +
           ',' +
-          decodedResp['data']['actived'].toString();
+          decodedResp['data']['actived'].toString() +
+          ',' +
+          decodedResp['data']['deleted'].toString();
     } else {
       return decodedResp['message'];
     }
