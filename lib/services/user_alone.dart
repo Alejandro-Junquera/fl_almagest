@@ -16,7 +16,7 @@ class UserAloneService extends ChangeNotifier {
     String? id = await AuthService().readId();
     isLoading = true;
     notifyListeners();
-    final url = Uri.http(_baseUrl, '/public/api/usuario/$id');
+    final url = Uri.http(_baseUrl, '/public/api/user/$id');
     final resp = await http.get(
       url,
       headers: {
@@ -26,8 +26,8 @@ class UserAloneService extends ChangeNotifier {
       },
     );
     final Map<String, dynamic> decodedResp = json.decode(resp.body);
-    var usuario = UserAlonePlus.fromJson(decodedResp);
-    user = usuario.data!;
+    var usuario = UserAlone.fromJson(decodedResp);
+    user = usuario.data! as UserAlone;
     print(decodedResp);
     isLoading = false;
     notifyListeners();
