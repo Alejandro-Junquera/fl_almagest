@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 import 'package:fl_almagest/models/models.dart';
 
 class UserAloneService extends ChangeNotifier {
-  final String _baseUrl = 'salesin.allsites.es';
+  final String _baseUrl = 'semillero.allsites.es';
   bool isLoading = true;
   UserAlone user = UserAlone();
 
