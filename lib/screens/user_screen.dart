@@ -275,7 +275,8 @@ class _UserScreenState extends State<UserScreen> {
                                         child: Text(
                                           'Remove Product',
                                           style: const TextStyle(
-                                              color: Colors.white),
+                                              color: Colors.white,
+                                              fontSize: 12),
                                         ),
                                       ),
                                     ),
