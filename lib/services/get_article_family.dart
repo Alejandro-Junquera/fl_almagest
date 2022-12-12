@@ -5,14 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 
-class GetArticleFamilyService extends ChangeNotifier{
-
+class GetArticleFamilyService extends ChangeNotifier {
   final String _baseUrl = 'semillero.allsites.es';
   final storage = const FlutterSecureStorage();
-  final List<Data> articles = [];
+  final List<DataArticle> articles = [];
   bool isLoading = true;
 
-getArticles(String id) async {
+  getArticles(String id) async {
     isLoading = true;
     notifyListeners();
     final url = Uri.http(_baseUrl, '/public/api/mostrarArt');

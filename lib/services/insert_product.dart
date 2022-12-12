@@ -1,30 +1,37 @@
 import 'dart:convert';
-import 'package:flutter/material.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:fl_almagest/services/auth_service.dart';
+import 'package:fl_almagest/services/services.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
+import 'package:fl_almagest/models/models.dart';
 
-class InsertProductService extends ChangeNotifier{
+class ProductService extends ChangeNotifier {
   final String _baseUrl = 'semillero.allsites.es';
-  final storage = const FlutterSecureStorage();
+  bool isLoading = true;
 
-  insertProduct(String articleId, String companyId, String price, int familyId) async{
-    String? token = await storage.read(key: 'token') ?? '';
-    final Map<String, dynamic> authData = {
-      'article_id': articleId,
-      'company_id': companyId,
+  Future<String> setProduct(int article_id, double price, int family_id) async {
+    final url = Uri.http(_baseUrl, '/public/api/products');
+    String? token = await AuthService().readToken();
+    String? company_id = await UserAloneService().readCompany_id();
+    final Map<String, dynamic> productData = {
+      'company_id': company_id,
+      'article_id': article_id,
       'price': price,
-      'family_id': familyId,
+      'family_id': family_id
     };
-    final url = Uri.http(_baseUrl, '/public/api/products', {});
-    final resp = await http.post(url,
-        headers: {
-          'Accept': 'application/json',
-          'Authorization': 'Bearer $token',
-        },
-        body: json.encode(authData));
+    isLoading = true;
+    final resp = await http.post(
+      url,
+      headers: {
+        'Content-type': 'application/json',
+        'Accept': 'application/json',
+        "Authorization": "Bearer $token"
+      },
+      body: json.encode(productData),
+    );
     final Map<String, dynamic> decodedResp = json.decode(resp.body);
-    if (decodedResp['success'] == true) {
-      return decodedResp['message'];
-    }
+    isLoading = false;
+    notifyListeners();
+    return decodedResp['data']['id'].toString();
   }
 }

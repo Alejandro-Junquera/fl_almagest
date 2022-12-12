@@ -1,33 +1,46 @@
 import 'dart:convert';
-import 'package:fl_almagest/models/products.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:fl_almagest/services/auth_service.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
+import 'package:fl_almagest/models/models.dart';
 
-class GetProductService extends ChangeNotifier{
+import '../models/catalog.dart';
+import 'services.dart';
 
+class CatalogService extends ChangeNotifier {
   final String _baseUrl = 'semillero.allsites.es';
-  final storage = const FlutterSecureStorage();
-  final List<Data> products = [];
   bool isLoading = true;
+  final List<CatalogData> catalogdata = [];
 
-getProducts(String id) async {
-    String? token = await storage.read(key: 'token') ?? '';
+  Future<List<CatalogData>> getCatalog() async {
+    catalogdata.clear();
     isLoading = true;
     notifyListeners();
-    final url = Uri.http(_baseUrl, '/public/api/products/company', {'company_id': id});
-    final resp = await http.post(url, headers: {
-      'Accept': 'application/json',
-      'Authorization': 'Bearer $token',
-    });
+    final url = Uri.http(_baseUrl, '/public/api/products/company');
+    String? token = await AuthService().readToken();
+    String? company_id = await UserAloneService().readCompany_id();
+    final Map<String, dynamic> catalogData = {
+      'id': company_id,
+    };
+    print(company_id);
+
+    final resp = await http.post(
+      url,
+      headers: {
+        'Content-type': 'application/json',
+        'Accept': 'application/json',
+        "Authorization": "Bearer $token"
+      },
+      body: json.encode(catalogData),
+    );
     final Map<String, dynamic> decodedResp = json.decode(resp.body);
-    var p = Products.fromJson(decodedResp);
-    for (var i in p.data!) {
-      if (i.deleted == 0) {
-        products.add(i);
-      }
+    print(decodedResp);
+    var catalog = Catalog.fromJson(decodedResp);
+    for (var i in catalog.data!) {
+      catalogdata.add(i);
     }
     isLoading = false;
     notifyListeners();
+    return catalogdata;
   }
 }

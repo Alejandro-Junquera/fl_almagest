@@ -1,13 +1,18 @@
-class Product {
+class Catalog {
   bool? success;
-  ProductData? data;
+  List<CatalogData>? data;
   String? message;
 
-  Product({this.success, this.data, this.message});
+  Catalog({this.success, this.data, this.message});
 
-  Product.fromJson(Map<String, dynamic> json) {
+  Catalog.fromJson(Map<String, dynamic> json) {
     success = json['success'];
-    data = json['data'] != null ? new ProductData.fromJson(json['data']) : null;
+    if (json['data'] != null) {
+      data = <CatalogData>[];
+      json['data'].forEach((v) {
+        data!.add(new CatalogData.fromJson(v));
+      });
+    }
     message = json['message'];
   }
 
@@ -15,25 +20,25 @@ class Product {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['success'] = this.success;
     if (this.data != null) {
-      data['data'] = this.data!.toJson();
+      data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
     data['message'] = this.message;
     return data;
   }
 }
 
-class ProductData {
+class CatalogData {
   int? id;
-  String? articleId;
-  String? companyId;
+  int? articleId;
+  int? companyId;
   String? compamyName;
   String? compamyDescription;
   String? price;
-  Null? stock;
-  String? familyId;
-  Null? deleted;
+  int? stock;
+  int? familyId;
+  int? deleted;
 
-  ProductData(
+  CatalogData(
       {this.id,
       this.articleId,
       this.companyId,
@@ -44,7 +49,7 @@ class ProductData {
       this.familyId,
       this.deleted});
 
-  ProductData.fromJson(Map<String, dynamic> json) {
+  CatalogData.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     articleId = json['article_id'];
     companyId = json['company_id'];

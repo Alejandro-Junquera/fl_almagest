@@ -1,22 +1,32 @@
-
 import 'dart:convert';
-import 'package:fl_almagest/models/products.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:fl_almagest/services/auth_service.dart';
+import 'package:fl_almagest/services/services.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
+import 'package:fl_almagest/models/models.dart';
 
-class DeleteProductService extends ChangeNotifier{
+class DeleteProductService extends ChangeNotifier {
   final String _baseUrl = 'semillero.allsites.es';
-  final storage = const FlutterSecureStorage();
+  bool isLoading = true;
 
-  deleteProduct(String id) async{
-    String? token = await storage.read(key: 'token')?? '';
-    final url = Uri.http(_baseUrl, '/public/api/products/$id');
-    final resp = await http.delete(url, headers: {
-      'Accept': 'application/json',
-      'Authorization': 'Bearer $token',
-    });
+  Future<String> deleteProduct(int article_id) async {
+    final url = Uri.http(_baseUrl, '/public/api/products/$article_id');
+    String? token = await AuthService().readToken();
+    isLoading = true;
+    final resp = await http.delete(
+      url,
+      headers: {
+        'Content-type': 'application/json',
+        'Accept': 'application/json',
+        "Authorization": "Bearer $token"
+      },
+    );
+
     final Map<String, dynamic> decodedResp = json.decode(resp.body);
-    return decodedResp['message'];
+    print(decodedResp);
+
+    isLoading = false;
+    notifyListeners();
+    return decodedResp['message'].toString();
   }
 }

@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:fl_almagest/models/userAlone.dart';
 import 'package:fl_almagest/services/auth_service.dart';
 import 'package:flutter/cupertino.dart';
@@ -8,8 +8,8 @@ import 'package:fl_almagest/models/models.dart';
 
 class UserAloneService extends ChangeNotifier {
   final String _baseUrl = 'semillero.allsites.es';
+  final storage = const FlutterSecureStorage();
   bool isLoading = true;
-  UserAlone user = UserAlone();
 
   readUserAlone() async {
     String? token = await AuthService().readToken();
@@ -26,11 +26,16 @@ class UserAloneService extends ChangeNotifier {
       },
     );
     final Map<String, dynamic> decodedResp = json.decode(resp.body);
-    var usuario = UserAlone.fromJson(decodedResp);
-    user = usuario.data! as UserAlone;
     print(decodedResp);
+    var usuario = UserAlone.fromJson(decodedResp);
+    await storage.write(
+        key: 'company_id', value: decodedResp['data']['company_id'].toString());
     isLoading = false;
     notifyListeners();
-    return decodedResp['data']['deleted'];
+    return decodedResp['company_id'];
+  }
+
+  readCompany_id() async {
+    return await storage.read(key: 'company_id') ?? '';
   }
 }

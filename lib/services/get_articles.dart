@@ -1,33 +1,47 @@
 import 'dart:convert';
-import 'package:fl_almagest/models/articles.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:fl_almagest/models/catalog.dart';
+import 'package:fl_almagest/services/auth_service.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
+import 'package:fl_almagest/models/models.dart';
 
-class GetArticlesService extends ChangeNotifier{
+import '../models/articles.dart';
+import 'get_products.dart';
 
+class ArticleService extends ChangeNotifier {
   final String _baseUrl = 'semillero.allsites.es';
-  final storage = const FlutterSecureStorage();
-  final List<Data> articles = [];
   bool isLoading = true;
+  final List<DataArticle> articles = [];
 
-getArticles(String id) async {
-    String? token = await storage.read(key: 'token') ?? '';
+  getArticles() async {
+    final catalogService = CatalogService();
+    await catalogService.getCatalog();
+    final List<CatalogData> catalog = catalogService.catalogdata;
+
+    articles.clear();
+    final url = Uri.http(_baseUrl, '/public/api/articles');
+    String? token = await AuthService().readToken();
     isLoading = true;
     notifyListeners();
-    final url = Uri.http(_baseUrl, '/public/api/articles');
-    final resp = await http.post(url, headers: {
-      'Accept': 'application/json',
-      'Authorization': 'Bearer $token',
-    });
+    final resp = await http.get(
+      url,
+      headers: {
+        'Content-type': 'application/json',
+        'Accept': 'application/json',
+        "Authorization": "Bearer $token"
+      },
+    );
     final Map<String, dynamic> decodedResp = json.decode(resp.body);
-    var p = Articles.fromJson(decodedResp);
-    for (var i in p.data!) {
-      if (i.deleted == 0) {
-        articles.add(i);
-      }
+    print(decodedResp);
+    var article = Articles.fromJson(decodedResp);
+    for (var i in article.data!) {
+      articles.add(i);
+    }
+    for (var i in catalog) {
+      articles.removeWhere((element) => (element.id == i.articleId));
     }
     isLoading = false;
     notifyListeners();
+    return articles;
   }
 }

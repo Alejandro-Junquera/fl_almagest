@@ -120,6 +120,10 @@ class _LoginForm extends StatelessWidget {
                       if (splitted?[0] == 'a') {
                         Navigator.pushReplacementNamed(context, 'admin');
                       } else if (splitted?[0] == 'u') {
+                        final userAloneService = Provider.of<UserAloneService>(
+                            context,
+                            listen: false);
+                        await userAloneService.readUserAlone();
                         if (splitted?[2] == 1) {
                           customToast('Your user was deleted', context);
                         } else if (splitted?[1] == '1') {

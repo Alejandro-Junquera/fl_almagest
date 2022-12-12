@@ -40,23 +40,23 @@ class AppState extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_) => UserAloneService(),
         ),
-         ChangeNotifierProvider(
-          create: (_) => GetProductService(),
+        ChangeNotifierProvider(
+          create: (_) => CatalogService(),
         ),
         ChangeNotifierProvider(
-          create: (_) => InsertProductService(),
+          create: (_) => ProductService(),
         ),
         ChangeNotifierProvider(
           create: (_) => DeleteProductService(),
         ),
-         ChangeNotifierProvider(
+        ChangeNotifierProvider(
           create: (_) => GetArticleFamilyService(),
         ),
         ChangeNotifierProvider(
           create: (_) => GetArticleService(),
         ),
-         ChangeNotifierProvider(
-          create: (_) => GetArticlesService(),
+        ChangeNotifierProvider(
+          create: (_) => ArticleService(),
         ),
       ],
       child: MyApp(),
