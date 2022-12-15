@@ -143,7 +143,7 @@ class _UserScreenState extends State<UserScreen> {
                           child: TextField(
                             onChanged: (value) => _runFilter(value),
                             decoration: const InputDecoration(
-                                labelText: 'Search',
+                                labelText: '  Search',
                                 suffixIcon: Icon(Icons.search)),
                           ),
                         ),
