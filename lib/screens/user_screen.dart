@@ -19,6 +19,8 @@ class UserScreen extends StatefulWidget {
 }
 
 class _UserScreenState extends State<UserScreen> {
+  var contArticles = 0;
+  var maxPermit = false;
   final catalogService = CatalogService();
   final articleService = ArticleService();
   bool visible = true;
@@ -31,6 +33,7 @@ class _UserScreenState extends State<UserScreen> {
     await catalogService.getCatalog();
     setState(() {
       catalog = catalogService.catalogdata;
+      contArticles = catalog.length;
     });
   }
 
@@ -124,7 +127,7 @@ class _UserScreenState extends State<UserScreen> {
                       height: 80,
                       width: MediaQuery.of(context).size.width / 1.1,
                       child: Center(
-                        child: Text('Catalog',
+                        child: Text('Catalog ' + contArticles.toString() + '/5',
                             style: Theme.of(context).textTheme.headline3),
                       ),
                     ),
@@ -260,6 +263,10 @@ class _UserScreenState extends State<UserScreen> {
                                                     catalog.removeWhere(
                                                         (element) =>
                                                             (element == i));
+                                                    contArticles--;
+                                                    if (contArticles < 5) {
+                                                      maxPermit = false;
+                                                    }
                                                   });
                                                   Navigator.pop(context);
                                                 },
@@ -378,26 +385,39 @@ class _UserScreenState extends State<UserScreen> {
                                       disabledColor: Colors.grey,
                                       elevation: 0,
                                       color: Colors.blueGrey[600],
-                                      onPressed: () {
-                                        FocusScope.of(context).unfocus();
-                                        if (valorPrueba <
-                                                double.parse(i.priceMin!) ||
-                                            valorPrueba >
-                                                double.parse(i.priceMax!)) {
-                                          customToast('Price error', context);
-                                        } else {
-                                          addProductService.setProduct(
-                                              i.id!, valorPrueba, i.familyId!);
-                                          setState(() {
-                                            articles.removeWhere(
-                                                (element) => (element == i));
-                                            articlesBuscar.removeWhere(
-                                                (element) => (element == i));
-                                            valorPrueba =
-                                                double.parse(i.priceMin!);
-                                          });
-                                        }
-                                      },
+                                      onPressed: maxPermit
+                                          ? null
+                                          : () {
+                                              FocusScope.of(context).unfocus();
+                                              if (valorPrueba <
+                                                      double.parse(
+                                                          i.priceMin!) ||
+                                                  valorPrueba >
+                                                      double.parse(
+                                                          i.priceMax!)) {
+                                                customToast(
+                                                    'Price error', context);
+                                              } else {
+                                                addProductService.setProduct(
+                                                    i.id!,
+                                                    valorPrueba,
+                                                    i.familyId!);
+                                                setState(() {
+                                                  articles.removeWhere(
+                                                      (element) =>
+                                                          (element == i));
+                                                  articlesBuscar.removeWhere(
+                                                      (element) =>
+                                                          (element == i));
+                                                  valorPrueba =
+                                                      double.parse(i.priceMin!);
+                                                  contArticles++;
+                                                  if (contArticles == 5) {
+                                                    maxPermit = true;
+                                                  }
+                                                });
+                                              }
+                                            },
                                       child: Container(
                                         padding: const EdgeInsets.symmetric(
                                             horizontal: 80, vertical: 15),
