@@ -34,6 +34,9 @@ class _UserScreenState extends State<UserScreen> {
     setState(() {
       catalog = catalogService.catalogdata;
       contArticles = catalog.length;
+      if (catalog.length == 5) {
+        maxPermit = true;
+      }
     });
   }
 
