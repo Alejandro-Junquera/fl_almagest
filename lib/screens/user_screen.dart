@@ -415,7 +415,7 @@ class _UserScreenState extends State<UserScreen> {
                                                   valorPrueba =
                                                       double.parse(i.priceMin!);
                                                   contArticles++;
-                                                  if (contArticles == 5) {
+                                                  if (contArticles >= 5) {
                                                     maxPermit = true;
                                                   }
                                                 });
