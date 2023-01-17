@@ -1,3 +1,5 @@
+export 'package:fl_almagest/services/family_service.dart';
+export 'package:fl_almagest/services/orders_service.dart';
 export 'package:fl_almagest/services/activate_service.dart';
 export 'package:fl_almagest/services/auth_service.dart';
 export 'package:fl_almagest/services/cicles_service.dart';

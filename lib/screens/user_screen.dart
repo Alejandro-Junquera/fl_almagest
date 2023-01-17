@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:fl_almagest/models/family.dart';
 import 'package:fl_almagest/models/models.dart';
 import 'package:fl_almagest/services/services.dart';
 import 'package:flutter/material.dart';
@@ -23,11 +24,13 @@ class _UserScreenState extends State<UserScreen> {
   var maxPermit = false;
   final catalogService = CatalogService();
   final articleService = ArticleService();
+  final familyService = FamilyService();
   bool visible = true;
   bool novisible = false;
   List<DataArticle> articles = [];
   List<DataArticle> articlesBuscar = [];
   List<CatalogData> catalog = [];
+  List<DataFamily> family = [];
   Future getCatalog() async {
     setState(() => catalog.clear());
     await catalogService.getCatalog();
@@ -49,11 +52,20 @@ class _UserScreenState extends State<UserScreen> {
     });
   }
 
+  Future getFamilies() async {
+    setState(() => family.clear());
+    await familyService.getFamilies();
+    setState(() {
+      family = familyService.families;
+    });
+  }
+
   @override
   void initState() {
     super.initState();
     getCatalog();
     getArticles();
+    getFamilies();
     articlesBuscar = articles;
   }
 
@@ -84,14 +96,22 @@ class _UserScreenState extends State<UserScreen> {
         Provider.of<DeleteProductService>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
-          title: const Text('Personal Area : '),
-          backgroundColor: Colors.blueGrey[800],
-          leading: IconButton(
-              icon: Icon(Icons.login_outlined),
+        title: const Text('Personal Area : '),
+        backgroundColor: Colors.blueGrey[800],
+        leading: IconButton(
+            icon: Icon(Icons.login_outlined),
+            onPressed: () {
+              authService.logout();
+              Navigator.pushReplacementNamed(context, 'login');
+            }),
+        actions: [
+          IconButton(
               onPressed: () {
-                authService.logout();
-                Navigator.pushReplacementNamed(context, 'login');
-              })),
+                Navigator.of(context).pushNamed('orders');
+              },
+              icon: const Icon(Icons.shopping_bag))
+        ],
+      ),
       bottomNavigationBar: CurvedNavigationBar(
         height: 55,
         backgroundColor: Colors.blueGrey,
@@ -304,7 +324,14 @@ class _UserScreenState extends State<UserScreen> {
                       items: articlesBuscar.map((i) {
                         return Builder(
                           builder: (BuildContext context) {
+                            double margenBeneficio = 0;
                             double valorPrueba = double.parse(i.priceMin!);
+                            for (int x = 0; x < family.length; x++) {
+                              if (i.familyId == family[x].id) {
+                                margenBeneficio =
+                                    double.parse(family[x].profitMargin!);
+                              }
+                            }
                             return Container(
                                 width: MediaQuery.of(context).size.width,
                                 margin: EdgeInsets.symmetric(horizontal: 5.0),
@@ -392,14 +419,14 @@ class _UserScreenState extends State<UserScreen> {
                                           ? null
                                           : () {
                                               FocusScope.of(context).unfocus();
-                                              if (valorPrueba <
-                                                      double.parse(
-                                                          i.priceMin!) ||
-                                                  valorPrueba >
-                                                      double.parse(
-                                                          i.priceMax!)) {
+                                              if (((valorPrueba *
+                                                              margenBeneficio) /
+                                                          100) +
+                                                      valorPrueba >
+                                                  double.parse(i.priceMax!)) {
                                                 customToast(
-                                                    'Price error', context);
+                                                    'El margen de beneficios es demasiado bajo',
+                                                    context);
                                               } else {
                                                 addProductService.setProduct(
                                                     i.id!,

@@ -58,6 +58,12 @@ class AppState extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_) => ArticleService(),
         ),
+        ChangeNotifierProvider(
+          create: (_) => OrdersService(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => FamilyService(),
+        ),
       ],
       child: MyApp(),
     );
@@ -78,6 +84,7 @@ class MyApp extends StatelessWidget {
           'register': (_) => RegisterScreen(),
           'admin': (_) => AdminScreen(),
           'user': (_) => UserScreen(),
+          'orders': (_) => OrdersScreen(),
         },
         theme: ThemeData.light()
             .copyWith(scaffoldBackgroundColor: Colors.grey[300]));

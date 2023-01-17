@@ -22,7 +22,6 @@ class CatalogService extends ChangeNotifier {
     final Map<String, dynamic> catalogData = {
       'id': company_id,
     };
-    print(company_id);
 
     final resp = await http.post(
       url,
@@ -34,7 +33,6 @@ class CatalogService extends ChangeNotifier {
       body: json.encode(catalogData),
     );
     final Map<String, dynamic> decodedResp = json.decode(resp.body);
-    print(decodedResp);
     var catalog = Catalog.fromJson(decodedResp);
     for (var i in catalog.data!) {
       catalogdata.add(i);

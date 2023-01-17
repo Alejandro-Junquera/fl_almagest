@@ -33,7 +33,6 @@ class AuthService extends ChangeNotifier {
         },
         body: json.encode(authData));
     final Map<String, dynamic> decodedResp = json.decode(resp.body);
-    print(decodedResp);
     if (decodedResp['success'] == true) {
       await storage.write(key: 'token', value: decodedResp['data']['token']);
       await storage.write(
