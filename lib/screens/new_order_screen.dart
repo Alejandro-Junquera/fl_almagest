@@ -82,7 +82,7 @@ class _RegisterFormState extends State<_RegisterForm> {
     final ciclesService = Provider.of<CiclesService>(context);
     final productsService = Provider.of<CatalogService2>(context);
     List<Data> ciclos = ciclesService.ciclos;
-    final List<Data> aux = ciclesService.ciclos;
+    List<Data> aux = [];
 
     Data miEmpresa = Data();
     double precioTotal = 0;
@@ -92,11 +92,21 @@ class _RegisterFormState extends State<_RegisterForm> {
       return preci;
     }
 
+    for (var i in ciclos) {
+      if (i.id.toString() != company_id) {
+        aux.add(i);
+      }
+    }
+    for (var i in ciclos) {
+      if (i.id.toString() == company_id) {
+        miEmpresa = i;
+      }
+    }
+
     DateTime now = new DateTime.now();
     DateTime date = DateTime(now.year, now.month, now.day);
     final DateFormat formatter = DateFormat('yyyy-MM-dd');
     final String fechaFormat = formatter.format(date);
-    ciclos.removeWhere((element) => element.id.toString() == company_id);
     Future<String> getlocalPath() async {
       final directory = await getApplicationDocumentsDirectory();
 
@@ -116,7 +126,7 @@ class _RegisterFormState extends State<_RegisterForm> {
       children: [
         DropdownButtonFormField(
           hint: const Text('Select a company'),
-          items: ciclos.map((e) {
+          items: aux.map((e) {
             return DropdownMenuItem(
               value: e.id,
               child: Text(e.name.toString()),
