@@ -42,7 +42,6 @@ dependencies:
   http: ^0.13.5
   pdf: ^3.9.0
   flutter_email_sender: ^5.2.0
-  downloads_path_provider_28: ^0.1.2
   path_provider: ^2.0.12
   permission_handler: ^9.2.0
   
