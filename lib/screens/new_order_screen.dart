@@ -425,7 +425,7 @@ class _RegisterFormState extends State<_RegisterForm> {
                 body: 'Se adjunta una copia de su pedido realizado',
                 subject: 'Pedido realizado',
                 recipients: ['alex.junquera96@gmail.com'],
-                attachmentPaths: ['/storage/emulated/0/Download/example.pdf'],
+                attachmentPaths: [file.path],
                 isHTML: false,
               );
               String platformResponse;
