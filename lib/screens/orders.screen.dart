@@ -100,6 +100,12 @@ class OrdersScreen extends StatelessWidget {
           ],
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.of(context).pushNamed('neworder');
+        },
+        child: const Icon(Icons.add),
+      ),
     );
   }
 }
