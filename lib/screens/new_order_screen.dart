@@ -24,6 +24,7 @@ class NewOrderScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('New Order'),
+        backgroundColor: Colors.blueGrey[800],
       ),
       body: SizedBox(
         height: MediaQuery.of(context).size.height,
@@ -371,7 +372,7 @@ class _RegisterFormState extends State<_RegisterForm> {
                                     children: [
                                       pw.Text(pedido[
                                               producto.articleId.toString()] ??
-                                          'Google'),
+                                          'Err data not founf'),
                                     ]),
                                 pw.Column(
                                     crossAxisAlignment:
@@ -434,7 +435,7 @@ class _RegisterFormState extends State<_RegisterForm> {
               final Email email = Email(
                 body: 'Se adjunta una copia de su pedido realizado',
                 subject: 'Pedido realizado',
-                recipients: ['alex.junquera96@gmail.com'],
+                recipients: ['raulreyes@cadiz.salesianos.edu '],
                 attachmentPaths: [file.path],
                 isHTML: false,
               );
