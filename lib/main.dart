@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:fl_almagest/services/services.dart';
 import 'package:provider/provider.dart';
 
+import 'providers/product_form_provider.dart';
+
 void main() => runApp(AppState());
 
 class AppState extends StatelessWidget {
@@ -70,6 +72,12 @@ class AppState extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_) => NewOrderService(),
         ),
+        ChangeNotifierProvider(
+          create: (_) => ProductFormProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => GraphService(),
+        ),
       ],
       child: MyApp(),
     );
@@ -92,6 +100,7 @@ class MyApp extends StatelessWidget {
           'user': (_) => UserScreen(),
           'orders': (_) => OrdersScreen(),
           'neworder': (_) => NewOrderScreen(),
+          'graphs': (_) => GraphsScreen()
         },
         theme: ThemeData.light()
             .copyWith(scaffoldBackgroundColor: Colors.grey[300]));

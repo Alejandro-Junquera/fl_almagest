@@ -109,7 +109,12 @@ class _UserScreenState extends State<UserScreen> {
               onPressed: () {
                 Navigator.of(context).pushNamed('orders');
               },
-              icon: const Icon(Icons.shopping_bag))
+              icon: const Icon(Icons.shopping_bag)),
+          IconButton(
+              onPressed: () {
+                Navigator.of(context).pushNamed('graphs');
+              },
+              icon: const Icon(Icons.graphic_eq))
         ],
       ),
       bottomNavigationBar: CurvedNavigationBar(

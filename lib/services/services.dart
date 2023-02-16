@@ -1,3 +1,4 @@
+export 'package:fl_almagest/services/graph_service.dart';
 export 'package:fl_almagest/services/get_new_order.dart';
 export 'package:fl_almagest/services/get_products2.dart';
 export 'package:fl_almagest/services/family_service.dart';
