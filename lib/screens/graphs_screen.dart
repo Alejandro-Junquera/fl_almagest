@@ -118,6 +118,7 @@ class _GraphsScreenState extends State<GraphsScreen> {
                           : 'select a Product';
                     },
                   ),
+                  const SizedBox(height: 10),
                   MaterialButton(
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10)),
